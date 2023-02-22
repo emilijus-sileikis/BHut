@@ -7,21 +7,28 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/category') }}">
-                <i class="mdi mdi-view-headline menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#categories" aria-expanded="false" aria-controls="categories">
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
                 <span class="menu-title">Categories</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-circle-outline menu-icon"></i>
-                <span class="menu-title">UI Elements</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="categories">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/category/create') }}">Create Category</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/category') }}">View Categories</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#products" aria-expanded="false" aria-controls="products">
+                <i class="mdi mdi-plus-circle-outline menu-icon"></i>
+                <span class="menu-title">Products</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="products">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products/create') }}">Create Product</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products') }}">View Products</a></li>
                 </ul>
             </div>
         </li>

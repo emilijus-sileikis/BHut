@@ -36,8 +36,8 @@ class CategoryController extends Controller
 
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
-            $fileName = time().'.'.$ext;
-            $destinationPath = public_path().'/uploads/category';
+            $fileName = rand(1000000, 9999999).'.'.$ext;
+            $destinationPath = public_path().'/uploads/category/';
 
             $file->move($destinationPath,$fileName);
             $category->image = $fileName;
@@ -79,8 +79,8 @@ class CategoryController extends Controller
 
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
-            $fileName = time().'.'.$ext;
-            $destinationPath = public_path().'/uploads/category';
+            $fileName = rand(1000000, 9999999).'.'.$ext;
+            $destinationPath = public_path().'/uploads/category/';
 
             $file->move($destinationPath,$fileName);
             $item->image = $fileName;
