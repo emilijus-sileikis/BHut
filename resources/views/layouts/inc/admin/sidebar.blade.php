@@ -1,9 +1,15 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ url('admin/dashboard') }}">
                 <i class="mdi mdi-home menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('admin/category') }}">
+                <i class="mdi mdi-view-headline menu-icon"></i>
+                <span class="menu-title">Categories</span>
             </a>
         </li>
         <li class="nav-item">
@@ -18,12 +24,6 @@
                     <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
                 </ul>
             </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-                <i class="mdi mdi-view-headline menu-icon"></i>
-                <span class="menu-title">Form elements</span>
-            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="pages/charts/chartjs.html">
