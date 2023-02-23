@@ -38,6 +38,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/products', 'index');
         Route::get('/products/create', 'create');
         Route::post('/products', 'store');
+        Route::get('/products/{product}/edit', 'edit');
+        Route::put('/products/{product}', 'update');
+        Route::get('/products/{product_id}/delete', 'delete');
+        Route::get('/product-image/{product_image_id}/delete', 'deleteImage');
     });
 
 });
