@@ -1,11 +1,11 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper d-flex justify-content-center">
         <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-            <a class="navbar-brand brand-logo" href="{{ url('home') }}">
+            <a class="navbar-brand brand-logo" href="{{ url('/') }}">
 {{--                <img src="images/logo.svg" alt="logo"/>--}}
                 BHut
             </a>
-            <a class="navbar-brand brand-logo-mini" href="{{ url('home') }}">
+            <a class="navbar-brand brand-logo-mini" href="{{ url('/') }}">
 {{--                <img src="images/logo-mini.svg" alt="logo"/>--}}
                 <h6>BHut</h6>
             </a>
