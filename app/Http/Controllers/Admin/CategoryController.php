@@ -37,7 +37,7 @@ class CategoryController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $fileName = rand(1000000, 9999999).'.'.$ext;
-            $destinationPath = public_path().'/uploads/category/';
+            $destinationPath = 'uploads/category/';
 
             $file->move($destinationPath,$fileName);
             $category->image = $fileName;
@@ -70,9 +70,8 @@ class CategoryController extends Controller
 
         if($request->hasFile('image')) {
 
-            $path = 'uploads/category'.$item->image;
+            $path = $item->image;
 
-            //TODO Not working
             if (File::exists($path)) {
                 File::delete($path);
             }
@@ -80,7 +79,7 @@ class CategoryController extends Controller
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $fileName = rand(1000000, 9999999).'.'.$ext;
-            $destinationPath = public_path().'/uploads/category/';
+            $destinationPath = 'uploads/category/';
 
             $file->move($destinationPath,$fileName);
             $item->image = $fileName;
