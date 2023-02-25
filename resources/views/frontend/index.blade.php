@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="20000">
 
         <div class="carousel-inner">
 
@@ -11,10 +11,10 @@
                 <div class="carousel-item {{ $key == 0 ? 'active':'' }}">
 
                     @if($item->image)
-                        <img src="{{ asset("$item->image") }}" class="d-block w-100" alt="...">
+                        <img src="{{ asset("$item->image") }}" class="d-block w-100 img-fluid" alt="Slider">
                     @endif
 
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-md-block">
                         <div class="custom-carousel-content">
                             <h1>{!! $item->title !!}</h1>
                             <p>{!! $item->description !!}</p>
