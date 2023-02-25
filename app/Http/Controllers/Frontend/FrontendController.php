@@ -22,4 +22,18 @@ class FrontendController extends Controller
 
         return view('frontend.categories.category.index', compact('categories'));
     }
+
+    public function products($category_slug)
+    {
+        $category = Category::where('slug', $category_slug)->first();
+
+        if ($category) {
+            $products = $category->products()->get();
+
+            return view('frontend.categories.products.index', compact('products', 'category'));
+        }
+        else {
+            return redirect()->back();
+        }
+    }
 }

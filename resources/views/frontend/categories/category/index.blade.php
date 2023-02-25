@@ -14,7 +14,7 @@
                         <div class="category-card">
                             <a href="{{ url('/categories/'.$item->slug) }}">
                                 <div class="img-fluid category-card-img">
-                                    <img src="{{asset('uploads/category/'.$item->image)}}" class="w-100" alt="Category">
+                                    <img src="{{asset($item->image)}}" class="w-100" alt="Category">
                                 </div>
                                 <div class="category-card-body">
                                     <h5>{{$item->name}}</h5>
