@@ -40,7 +40,7 @@ class CategoryController extends Controller
             $destinationPath = 'uploads/category/';
 
             $file->move($destinationPath,$fileName);
-            $category->image = $fileName;
+            $category->image = $destinationPath.$fileName;
         }
 
         $category->meta_title = $validatedData['meta_title'];
@@ -82,7 +82,7 @@ class CategoryController extends Controller
             $destinationPath = 'uploads/category/';
 
             $file->move($destinationPath,$fileName);
-            $item->image = $fileName;
+            $item->image = $destinationPath.$fileName;
         }
 
         $item->meta_title = $validatedData['meta_title'];
