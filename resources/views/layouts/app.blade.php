@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     @livewireStyles
 </head>
@@ -28,6 +29,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        @include('layouts.inc.frontend.footer')
+
     </div>
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>

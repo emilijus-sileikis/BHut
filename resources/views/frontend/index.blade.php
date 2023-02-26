@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="20000">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
 
         <div class="carousel-inner">
 
@@ -12,6 +12,7 @@
 
                     @if($item->image)
                         <img src="{{ asset("$item->image") }}" class="d-block w-100 img-fluid" alt="Slider">
+                        <div class="overlay"></div>
                     @endif
 
                     <div class="carousel-caption d-md-block">
