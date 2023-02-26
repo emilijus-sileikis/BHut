@@ -55,6 +55,9 @@
                                 <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i> My Orders</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li>
+                                @if(Auth::user()->role_as == '1')
+                                    <li><a class="dropdown-item" href="{{ url('admin/dashboard') }}"><i class="fa fa-chart-pie"></i> Dashboard</a></li>
+                                @endif
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

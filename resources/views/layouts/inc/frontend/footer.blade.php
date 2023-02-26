@@ -7,7 +7,7 @@
         <a href="#"><i class="fab fa-instagram"></i></a>
     </div>
     <div class="footer-links">
-        <a href="#">Home</a>
+        <a href="{{ url('/') }}">Home</a>
         <a href="#">Contact</a>
     </div>
 </footer>

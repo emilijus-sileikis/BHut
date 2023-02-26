@@ -27,7 +27,17 @@
         @include('layouts.inc.frontend.navbar')
 
         <main class="py-4">
-            @yield('content')
+            <div>
+                @yield('content')
+            </div>
+            <div>
+                @yield('categories')
+            </div>
+            <br>
+            <div>
+                @yield('newProducts')
+            </div>
+            <br><br><br>
         </main>
 
         @include('layouts.inc.frontend.footer')

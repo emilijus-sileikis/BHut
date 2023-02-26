@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('categories')
 
     <div class="py-3 py-md-5 bg-light">
         <div class="container">
@@ -27,18 +27,6 @@
                         <h5>No Categories Available</h5>
                     </div>
                 @endforelse
-
-{{--                <div class="test">--}}
-{{--                    <div class="content">--}}
-{{--                        <h1>Responsive image with picturefill and object-fit</h1>--}}
-{{--                        <div class="image">--}}
-{{--                            <img class="image-fit" alt="Sunflower" srcset="https://skywalkapps.github.io/assets/images/sunflower-320.jpg 320w, https://skywalkapps.github.io/assets/images/sunflower-650.jpg 650w, https://skywalkapps.github.io/assets/images/sunflower-1300.jpg 1300w" sizes="(min-width: 650px) 650px, 100vw">--}}
-{{--                            <noscript>--}}
-{{--                                <img class="image-fit" alt="Sunflower" src="https://skywalkapps.github.io/assets/images/sunflower-320.jpg">--}}
-{{--                            </noscript>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
 
             </div>
         </div>

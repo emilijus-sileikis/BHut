@@ -10,7 +10,7 @@
                         @if($item->quantity > 0)
                             <label class="stock bg-success">In Stock</label>
                         @else
-                            <label class="stock bg-success">Out Of Stock</label>
+                            <label class="stock bg-danger">Out Of Stock</label>
                         @endif
 
                         @if($item->images->count() > 0)

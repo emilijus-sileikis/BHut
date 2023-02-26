@@ -37,4 +37,12 @@
         </button>
     </div>
 
-@endsection
+@stop
+
+@section('categories')
+    @include('frontend.categories.category.index')
+@stop
+
+@section('newProducts')
+    @include('frontend.categories.products.new')
+@stop

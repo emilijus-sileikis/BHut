@@ -141,6 +141,7 @@
 }
 .main-navbar {
     border-bottom: 1px solid #ccc;
+    z-index: 99999999;
 }
 .main-navbar .top-navbar {
     background-color: rgba(235, 169, 55, 1);
@@ -308,6 +309,7 @@
     padding: 2px 12px;
     margin: 8px;
     font-size: 12px;
+    z-index: 1;
 }
 .product-card .product-card-img {
     position: relative;
@@ -364,8 +366,11 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: fixed;
     overflow-x: hidden;
+    width: 100%;
+    bottom: 0;
+    z-index: 99999999;
 }
 .website-name {
     font-size: 1.25rem;
@@ -414,3 +419,14 @@ footer {
     }
 }
 /* Footer End */
+
+/* MISC Start */
+.more-btn {
+    background-color: #f8d49c;
+    color: white;
+}
+.more-btn:hover {
+    background-color: rgba(235, 169, 55, 1);
+    color: white;
+}
+/* MISC End */
