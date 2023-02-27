@@ -33,8 +33,8 @@
                                     <img src="{{ asset($item->image) }}" width="60px" height="60px">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="stat">Status</label><br/>
-                                    <input type="checkbox" id="stat" name="status" value="{{ $item->status == '1' ? 'checked' : '' }}">
+                                <label for="stat">Status (Checked=Hidden, Unchecked=Visible)</label> <br>
+                                <input id="stat" type="checkbox" name="status" {{ $item->status == '1' ? 'checked':'' }} style="width: 20px; height: 20px;">
                             </div>
                             <div class="col-md-12">
                                 <h4>SEO Tags</h4>

@@ -26,61 +26,62 @@ class ProductFormRequest extends FormRequest
         return [
             'category_id' => [
                 'required',
-                'integer',
+                'integer'
             ],
             'name' => [
                 'required',
-                'string',
+                'string'
             ],
             'slug' => [
                 'required',
                 'string',
-                'max:255',
+                'max:255'
             ],
             'small_description' => [
                 'required',
                 'string',
-                'max:100',
+                'max:100'
             ],
             'description' => [
                 'required',
                 'string',
-                'max:500',
+                'max:500'
             ],
             'original_price' => [
                 'required',
-                'integer',
+                'integer'
             ],
             'selling_price' => [
                 'required',
-                'integer',
+                'integer'
             ],
             'quantity' => [
                 'required',
-                'integer',
+                'integer'
             ],
             'trending' => [
-                'nullable',
+                'nullable'
             ],
             'status' => [
-                'nullable',
+                'nullable'
             ],
             'meta_title' => [
                 'required',
                 'string',
-                'max:255',
+                'max:255'
             ],
             'meta_keyword' => [
                 'required',
-                'string',
+                'string'
             ],
             'meta_description' => [
                 'required',
                 'string',
-                'max:500',
+                'max:500'
             ],
             'image' => [
                 'nullable',
+                'mimes:jpg,jpeg,png'
             ],
         ];
     }
