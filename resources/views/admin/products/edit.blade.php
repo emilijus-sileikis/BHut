@@ -99,13 +99,13 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="trnd">Trending</label> <br>
-                                            <input type="checkbox" id="trnd" name="trending" value="{{ $product->trending == '1' ? 'checked':'' }}" style="width: 20px; height: 20px;" >
+                                            <input type="checkbox" id="trnd" name="trending" {{ $product->trending == '1' ? 'checked':'' }} style="width: 20px; height: 20px;" >
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="stat">Status</label> <br>
-                                            <input type="checkbox" id="stat" name="status" value="{{ $product->status == '1' ? 'checked':'' }}" style="width: 20px; height: 20px;" >
+                                            <input type="checkbox" id="stat" name="status" {{ $product->status == '1' ? 'checked':'' }} style="width: 20px; height: 20px;" >
                                         </div>
                                     </div>
                                 </div>

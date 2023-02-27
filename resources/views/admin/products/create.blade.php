@@ -125,5 +125,3 @@
     </div>
 
 @endsection
-
-{{--TODO FIX PRICE INPUT--}}

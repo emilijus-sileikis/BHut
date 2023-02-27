@@ -49,11 +49,14 @@ class ProductFormRequest extends FormRequest
             ],
             'original_price' => [
                 'required',
-                'integer'
+                'numeric',
+                'between:0,999.99'
+
             ],
             'selling_price' => [
                 'required',
-                'integer'
+                'numeric',
+                'between:0,999.99'
             ],
             'quantity' => [
                 'required',
