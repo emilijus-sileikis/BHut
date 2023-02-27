@@ -52,6 +52,9 @@ class CategoryFormRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'status' => [
+              'nullable'
+            ],
         ];
     }
 }

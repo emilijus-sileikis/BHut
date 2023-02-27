@@ -12,7 +12,7 @@ class FrontendController extends Controller
     public function index()
     {
         $sliders = Slider::where('status','0')->get();
-        $categories = Category::all();
+        $categories = Category::where('status','0')->get();
         $products = Product::orderBy('id','DESC')->limit(4)->get();
 
         return view('frontend.index', compact('sliders', 'categories', 'products'));
