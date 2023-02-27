@@ -30,17 +30,18 @@ class ProductFormRequest extends FormRequest
             ],
             'name' => [
                 'required',
-                'string'
+                'string',
+                'max:50'
             ],
             'slug' => [
                 'required',
                 'string',
-                'max:255'
+                'max:100'
             ],
             'small_description' => [
                 'required',
                 'string',
-                'max:100'
+                'max:200'
             ],
             'description' => [
                 'required',
@@ -50,13 +51,13 @@ class ProductFormRequest extends FormRequest
             'original_price' => [
                 'required',
                 'numeric',
-                'between:0,999.99'
+                'between:0,9999.99'
 
             ],
             'selling_price' => [
                 'required',
                 'numeric',
-                'between:0,999.99'
+                'between:0,9999.99'
             ],
             'quantity' => [
                 'required',
@@ -71,20 +72,17 @@ class ProductFormRequest extends FormRequest
             'meta_title' => [
                 'required',
                 'string',
-                'max:255'
+                'max:100'
             ],
             'meta_keyword' => [
                 'required',
-                'string'
+                'string',
+                'max:100'
             ],
             'meta_description' => [
                 'required',
                 'string',
                 'max:500'
-            ],
-            'image' => [
-                'nullable',
-                'mimes:jpg,jpeg,png'
             ],
         ];
     }
