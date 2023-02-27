@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
-use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
@@ -38,5 +37,13 @@ class FrontendController extends Controller
         else {
             return redirect()->back();
         }
+    }
+
+    public function all()
+    {
+        $categories = Category::all();
+        $products = Product::orderBy('id','DESC')->paginate(4);
+
+        return view('frontend.products.all', ['categories' => $categories], ['products' => $products]);
     }
 }

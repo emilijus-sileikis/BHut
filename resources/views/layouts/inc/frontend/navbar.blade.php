@@ -99,7 +99,7 @@
                         <a class="nav-link" href="{{ url('/categories') }}">All Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">All Products</a>
+                        <a class="nav-link" href="{{ url('/products/all') }}">All Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Blog</a>

@@ -33,7 +33,7 @@
                             <div class="tab-pane fade border p-3 show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
                                 <div class="mb-3 mt-3">
                                     <label for="cat">Category</label>
-                                    <select id="cat" name="category_id" class="form-control">
+                                    <select id="cat" name="category_id" class="form-control" required>
                                         @foreach($categories as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                         @endforeach
@@ -41,34 +41,34 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="name">Product Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" />
+                                    <input type="text" id="name" name="name" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="slug">Product Slug</label>
-                                    <input type="text" id="slug" name="slug" class="form-control" />
+                                    <input type="text" id="slug" name="slug" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="short_descr">Short Description (100 Words)</label>
-                                    <textarea id="short_descr" name="small_description" class="form-control" rows="4"></textarea>
+                                    <textarea id="short_descr" name="small_description" class="form-control" rows="4" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="descr">Description</label>
-                                    <textarea id="descr" name="description" class="form-control" rows="4"></textarea>
+                                    <textarea id="descr" name="description" class="form-control" rows="4" required></textarea>
                                 </div>
                             </div>
 
                             <div class="tab-pane fade border p-3" id="seo-tab-pane" role="tabpanel" aria-labelledby="seo-tab" tabindex="0">
                                 <div class="mb-3 mt-3">
                                     <label for="meta">Meta Title</label>
-                                    <input type="text" id="meta" name="meta_title" class="form-control" />
+                                    <input type="text" id="meta" name="meta_title" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="meta_descr">Meta Description</label>
-                                    <textarea id="meta_descr" name="meta_description" class="form-control" rows="4"></textarea>
+                                    <textarea id="meta_descr" name="meta_description" class="form-control" rows="4" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="meta_key">Meta Keyword</label>
-                                    <textarea id="meta_key" name="meta_keyword" class="form-control" rows="4"></textarea>
+                                    <textarea id="meta_key" name="meta_keyword" class="form-control" rows="4" required></textarea>
                                 </div>
                             </div>
 
@@ -77,19 +77,19 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="or_price">Original Price</label>
-                                            <input type="text" id="or_price" name="original_price" class="form-control" />
+                                            <input type="text" id="or_price" name="original_price" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="sell_price">Selling Price</label>
-                                            <input type="text" id="sell_price" name="selling_price" class="form-control" />
+                                            <input type="text" id="sell_price" name="selling_price" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="qnt">Quantity</label>
-                                            <input type="number" id="qnt" name="quantity" class="form-control" />
+                                            <input type="number" id="qnt" name="quantity" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -125,3 +125,5 @@
     </div>
 
 @endsection
+
+{{--TODO FIX PRICE INPUT--}}

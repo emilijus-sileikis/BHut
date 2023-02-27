@@ -1,11 +1,12 @@
+@extends('layouts.app')
 
-@section('newProducts')
+@section('content')
 
     <div class="py-3 py-md-5 bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="mb-4">Newest Products</h4>
+                    <h4 class="mb-4">All Products</h4>
                 </div>
 
                 @forelse($products as $item)
@@ -43,11 +44,9 @@
                         <h5>No Products Available</h5>
                     </div>
                 @endforelse
-
-                <div class="col-md-12 mt-2">
-                    <a href="{{ url('products/all') }}"> <button class="btn more-btn">More Products</button> </a>
-                </div>
-
+            </div>
+            <div>
+                {{ $products->links() }}
             </div>
         </div>
     </div>
