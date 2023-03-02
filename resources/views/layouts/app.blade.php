@@ -24,23 +24,27 @@
 <body>
     <div id="app">
 
-        @include('layouts.inc.frontend.navbar')
+        <div class="gradient">
 
-        <main class="py-4">
-            <div>
-                @yield('content')
-            </div>
-            <div>
-                @yield('categories')
-            </div>
-            <br>
-            <div>
-                @yield('newProducts')
-            </div>
-            <br><br><br>
-        </main>
+            @include('layouts.inc.frontend.navbar')
 
-        @include('layouts.inc.frontend.footer')
+            <main class="py-4">
+                <div>
+                    @yield('content')
+                </div>
+                <div>
+                    @yield('categories')
+                </div>
+                <br>
+                <div>
+                    @yield('newProducts')
+                </div>
+                <br><br><br>
+            </main>
+
+            @include('layouts.inc.frontend.footer')
+
+        </div>
 
     </div>
     <!-- Scripts -->

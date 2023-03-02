@@ -1,3 +1,55 @@
+/*body {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+/*.gradient {*/
+/*    height: 100vh;*/
+/*    width: 100%;*/
+/*    background: linear-gradient(135deg, #fff5d5 0%, #ffd000 20%, #ffbf00 40%, #ffa600 60%, #ff8c00 80%);*/
+/*    background-size: 400% 400%;*/
+/*    animation: gradientAnimation 30s ease infinite;*/
+/*}*/
+
+/*@keyframes gradientAnimation {*/
+/*    0% {*/
+/*        background-position: 0% 50%;*/
+/*    }*/
+/*    50% {*/
+/*        background-position: 100% 50%;*/
+/*    }*/
+/*    100% {*/
+/*        background-position: 0% 50%;*/
+/*    }*/
+/*}*/
+/* Button Start */
+.card-header {
+    background-color: rgba(235, 169, 55, 0.5);
+}
+.btn-primary {
+    background-color: rgba(235, 169, 55, 1);
+    border-color: rgba(235, 169, 55, 1);
+}
+.btn-primary:hover {
+    background-color: rgba(235, 169, 55, 0.5);
+    border-color: rgba(235, 169, 55, 0.5);
+}
+.btn-link {
+    color: rgba(235, 169, 55, 1);
+}
+.btn-link:hover {
+    color: rgba(235, 169, 55, 0.5);
+}
+/* Button End */
+/* Pagination Start */
+.page-item.active .page-link {
+    background-color: rgba(235, 169, 55, 1);
+    border-color: rgba(235, 169, 55, 1);
+}
+.page-item .page-link {
+    color: rgba(235, 169, 55, 1);
+}
+/* Pagination End */
 /* Slider Start */
 #carouselExampleCaptions {
     height: 100%;
@@ -227,6 +279,7 @@
     border-radius: 10px;
     box-shadow: 0 0 16px rgba(0,0,0,0.1);
     position: relative;
+    margin-bottom: 18%;
 }
 .category-card::before {
     content: "";
@@ -250,7 +303,7 @@
 .category-card-img {
     position: relative;
     height: 0;
-    padding-bottom: 80%;
+    padding-bottom: 100%;
 }
 .category-card-img img {
     position: absolute;
@@ -281,6 +334,7 @@
     border-radius: 10px;
     box-shadow: 0 0 16px rgba(0,0,0,0.1);
     position: relative;
+    margin-bottom: 10%;
 }
 .product-card::before {
     content: "";
@@ -326,9 +380,9 @@
     object-fit: cover;
     object-position: center center;
 }
-.product-card .product-card-body {
-    padding: 10px 10px;
-}
+/*.product-card .product-card-body {*/
+/*    padding: 10px 10px;*/
+/*}*/
 .product-card .product-card-body .product-name {
     font-size: 20px;
     font-weight: 600;
