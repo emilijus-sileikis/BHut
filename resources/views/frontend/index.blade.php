@@ -16,7 +16,7 @@
                     @endif
 
                     <div class="carousel-caption d-md-block">
-                        <div class="custom-carousel-content">
+                        <div class="custom-carousel-content container">
                             <h1>{!! $item->title !!}</h1>
                             <p>{!! $item->description !!}</p>
                         </div>
