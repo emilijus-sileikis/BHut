@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label for="stat">Status</label> <br>
+                                            <label for="stat">Status (Checked=Hidden, Unchecked=Visible)</label> <br>
                                             <input type="checkbox" id="stat" name="status" {{ $product->status == '1' ? 'checked':'' }} style="width: 20px; height: 20px;" >
                                         </div>
                                     </div>
