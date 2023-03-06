@@ -30,7 +30,7 @@ class FrontendController extends Controller
         $category = Category::where('slug', $category_slug)->first();
 
         if ($category) {
-            $products = $category->products()->get();
+            $products = $category->products()->where('status','0')->get();
 
             return view('frontend.categories.products.index', compact('products', 'category'));
         }
@@ -42,7 +42,7 @@ class FrontendController extends Controller
     public function all()
     {
         $categories = Category::all();
-        $products = Product::orderBy('id','DESC')->paginate(4);
+        $products = Product::where('status','0')->orderBy('id','DESC')->paginate(4);
 
         return view('frontend.products.all', ['categories' => $categories], ['products' => $products]);
     }
