@@ -1,48 +1,83 @@
 #!/bin/bash
 
+# check if running with sudo
+if [ "$EUID" -ne 0 ]; then
+    echo "This script requires root privileges. Please run with 'sudo'."
+    exit 1
+fi
+
+# get input for environment variables
+echo "Enter the name of the website:"
+read APP_NAME
+
+echo "Enter APP_URL (With port!):"
+read APP_URL
+
+echo "Enter the database name:"
+read DB_DATABASE
+
+# check if db passwords match and assign them to a variable
+while true; do
+    echo "Enter the database password:"
+    read -s DB_PASSWORD
+    echo ""
+    echo "Confirm password:"
+    read -s DB_PASSWORD_CONFIRM
+    echo ""
+    if [ "$DB_PASSWORD" = "$DB_PASSWORD_CONFIRM" ]; then
+        break
+    else
+        echo "Passwords do not match. Exiting script."
+        exit 1
+    fi
+done
+
 # change directory to /var/www/html/
 cd /var/www/html/
 
-# move BHut directory to BHut.bck
-mv BHut BHut.bck
+# check if BHut directory exists
+if [ -d "BHut" ]; then
+    # move BHut directory to BHut.bck
+    mv BHut BHut.bck
+fi
 
 # clone repository
-sudo git clone https://github.com/emilijus-sileikis/BHut.git
+git clone -b main https://github.com/emilijus-sileikis/BHut
 
 # change directory to BHut
 cd BHut/
 
 # install npm packages
-sudo npm install
+npm install
 
 # update composer dependencies
 composer update
 
 # copy .env.example to .env
-sudo cp .env.example .env
+cp .env.example .env
 
 # change .env settings
-sudo sed -i 's/APP_NAME=Laravel/APP_NAME="BHut"/g' .env
-sudo sed -i 's/APP_URL=http:\/\/localhost/APP_URL="http:\/\/193.219.91.103:80"/g' .env
-sudo sed -i 's/DB_DATABASE=laravel/DB_DATABASE=bhut/g' .env
-sudo sed -i 's/DB_PASSWORD=/DB_PASSWORD=strongpass123/g' .env
+sed -i "s/APP_NAME=Laravel/APP_NAME=\"$APP_NAME\"/g" .env
+sed -i "s/APP_URL=http:\/\/localhost/APP_URL=\"$APP_URL\"/g" .env
+sed -i "s/DB_DATABASE=laravel/DB_DATABASE=$DB_DATABASE/g" .env
+sed -i "s/DB_PASSWORD=/DB_PASSWORD=$DB_PASSWORD/g" .env
 
 # set directory permissions
-sudo chmod -R 777 /var/www/html/BHut/
+chmod -R 777 /var/www/html/BHut/
 
 # generate application key
-sudo php artisan key:generate
+php artisan key:generate
 
 # run database migrations
-sudo php artisan migrate
+php artisan migrate
 
 # refresh database
-sudo php artisan migrate:refresh
+php artisan migrate:refresh
 
 # seed database
-sudo php artisan db:seed
+php artisan db:seed
 
 # restart apache2 service
-sudo service apache2 restart
+service apache2 restart
 
-echo "Done."
+echo "Done. You can now refresh your browser!"
