@@ -81,13 +81,13 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="or_price">Original Price</label>
-                                            <input type="text" id="or_price" name="original_price" value="{{ $product->original_price }}" class="form-control" maxlength="7" required>
+                                            <input type="text" id="or_price" name="original_price" value="{{ $product->original_price }}" class="form-control" maxlength="6" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="sell_price">Selling Price</label>
-                                            <input type="text" id="sell_price" name="selling_price" value="{{ $product->selling_price }}" class="form-control" maxlength="7" required>
+                                            <input type="text" id="sell_price" name="selling_price" value="{{ $product->selling_price }}" class="form-control" maxlength="6" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">

@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="meta_key">Meta Keyword</label>
-                                    <textarea id="meta_key" name="meta_keyword" class="form-control" rows="4" maxlength="200" required></textarea>
+                                    <textarea id="meta_key" name="meta_keyword" class="form-control" rows="4" maxlength="100" required></textarea>
                                 </div>
                             </div>
 
@@ -77,13 +77,13 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="or_price">Original Price</label>
-                                            <input type="text" id="or_price" name="original_price" class="form-control" maxlength="7" required>
+                                            <input type="text" id="or_price" name="original_price" class="form-control" maxlength="6" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="sell_price">Selling Price</label>
-                                            <input type="text" id="sell_price" name="selling_price" class="form-control" maxlength="7" required>
+                                            <input type="text" id="sell_price" name="selling_price" class="form-control" maxlength="6" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label for="stat">Status</label> <br>
+                                            <label for="stat">Status (Checked=Hidden, Unchecked=Visible)</label> <br>
                                             <input type="checkbox" id="stat" name="status" style="width: 20px; height: 20px;" />
                                         </div>
                                     </div>
