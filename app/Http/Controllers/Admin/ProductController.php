@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
@@ -99,6 +100,13 @@ class ProductController extends Controller
             $uploadPath = 'uploads/products/';
 
             foreach ($request->file('image') as $file) {
+
+                $validator = Validator::make($request->all(), [
+                    'image.*' => 'image|max:4000',
+                ]);
+
+                $validatedData = $validator->validated();
+
                 $ext = $file->getClientOriginalExtension();
                 $name = rand(1000000, 9999999).'.'.$ext;
                 $file->move($uploadPath,$name);
