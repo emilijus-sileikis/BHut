@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
@@ -39,11 +40,43 @@ class FrontendController extends Controller
         }
     }
 
-    public function all()
+    public function all(Request $request)
     {
         $categories = Category::all();
-        $products = Product::where('status','0')->orderBy('id','DESC')->paginate(4);
+        $products = Product::where('status', '0');
 
-        return view('frontend.products.all', ['categories' => $categories], ['products' => $products]);
+        // Category sorting
+        if ($request->filled('category')) {
+            $category_ids = $request->input('category');
+            if(in_array('all', $category_ids)){
+                $products->whereIn('category_id', $categories->pluck('id'));
+            } else {
+                $products->whereIn('category_id', $category_ids);
+            }
+        }
+
+        // Added price sorting
+        if ($request->filled('price_sort')) {
+            $priceSort = $request->input('price_sort');
+            if (in_array($priceSort, ['asc', 'desc'])) {
+                $products->orderBy('selling_price', $priceSort);
+            }
+        }
+
+        // Added quantity sorting
+        if ($request->filled('qty_sort')) {
+            $qtySort = $request->input('qty_sort');
+            if (in_array($qtySort, ['asc', 'desc'])) {
+                $products->orderBy('quantity', $qtySort);
+            }
+        }
+
+        else {
+            $products->orderBy('id', 'DESC');
+        }
+
+        $products = $products->paginate(8);
+
+        return view('frontend.products.all', compact('categories', 'products'));
     }
 }
