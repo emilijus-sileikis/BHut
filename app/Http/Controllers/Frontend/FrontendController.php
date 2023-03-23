@@ -71,12 +71,12 @@ class FrontendController extends Controller
             }
         }
 
-        else {
-            $products->orderBy('id', 'DESC');
+        if ($request->ajax()) {
+            $products = $products->paginate(8);
+            return view('frontend.products._products', compact('products'))->render();
         }
 
         $products = $products->paginate(8);
-
         return view('frontend.products.all', compact('categories', 'products'));
     }
 }
