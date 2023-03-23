@@ -12,7 +12,7 @@
                             <form method="GET" action="{{ route('products.all') }}">
                                 <label class="custom-label"><input class="custom-checkbox" type="checkbox" name="category[]" value="all" id="all-categories" {{ !request()->has('category') || in_array('all', (array) request('category')) ? 'checked' : '' }}> All Categories</label><br>
                                 @foreach ($categories as $category)
-                                    <label class="custom-label"><input class="custom-checkbox" type="checkbox" name="category[]" value="{{ $category->id }}" class="category-checkbox" {{ in_array($category->id, (array) request('category')) ? 'checked' : '' }}> {{ $category->name }}</label><br>
+                                    <label class="custom-label"><input class="custom-checkbox category-checkbox" type="checkbox" name="category[]" value="{{ $category->id }}" {{ in_array($category->id, (array) request('category')) ? 'checked' : '' }}> {{ $category->name }}</label><br>
                                 @endforeach
                                 <br>
                                 <label class="custom-label" for="price_sort">Sort by price:</label>
