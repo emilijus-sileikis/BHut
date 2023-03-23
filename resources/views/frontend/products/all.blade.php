@@ -80,6 +80,7 @@
 
             clearFilterButton.addEventListener('click', (e) => {
                 e.preventDefault();
+                clearFilterButton.blur();
 
                 resetForm();
 

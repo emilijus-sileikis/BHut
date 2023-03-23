@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\Frontend\FrontendController::class, 'index']);
 Route::get('/categories', [App\Http\Controllers\Frontend\FrontendController::class, 'categories']);
 Route::get('/categories/{category_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'products']);
+Route::get('/categories/{category_slug}/{product_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'productView']);
 Route::get('/products/all', [App\Http\Controllers\Frontend\FrontendController::class, 'all'])->name('products.all');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

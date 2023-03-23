@@ -22,12 +22,22 @@
 /*        background-position: 0% 50%;*/
 /*    }*/
 /*}*/
+
 /* MISC Start */
 .btn-dark:hover {
     background-color: rgba(33, 37, 41, 0.5);
     border-color: rgba(33, 37, 41, 0.5);
 }
+.more-btn {
+    background-color: #f8d49c;
+    color: white;
+}
+.more-btn:hover {
+    background-color: rgba(235, 169, 55, 1);
+    color: white;
+}
 /* MISC End */
+
 /* Checkboxes Start */
 .custom-checkbox {
     transform: scale(1.6);
@@ -38,6 +48,7 @@
     font-size: 20px;
 }
 /* Checkboxes End */
+
 /* Select Start */
 select {
     padding: 5px;
@@ -49,6 +60,7 @@ select:hover {
     background-color: rgba(235, 169, 55, 0.5);
 }
 /* Select End */
+
 /* Button Start */
 .card-header {
     background-color: rgba(235, 169, 55, 0.5);
@@ -68,6 +80,7 @@ select:hover {
     color: rgba(235, 169, 55, 0.5);
 }
 /* Button End */
+
 /* Pagination Start */
 .page-item.active .page-link {
     background-color: rgba(235, 169, 55, 1);
@@ -77,6 +90,7 @@ select:hover {
     color: rgba(235, 169, 55, 1);
 }
 /* Pagination End */
+
 /* Slider Start */
 #carouselExampleCaptions {
     height: 100%;
@@ -507,13 +521,55 @@ footer {
 }
 /* Footer End */
 
-/* MISC Start */
-.more-btn {
-    background-color: #f8d49c;
-    color: white;
+/* Product View Start */
+.product-view .product-name {
+    font-size: 24px;
+    color: rgba(235, 169, 55, 1);
 }
-.more-btn:hover {
+.product-view .product-name .label-stock {
+    font-size: 13px;
+    padding: 4px 13px;
+    border-radius: 5px;
+    color: #fff;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+    float: right;
+}
+.product-view .product-path {
+    font-size: 13px;
+    font-weight: 500;
+    color: #252525;
+    margin-bottom: 16px;
+}
+.product-view .selling-price {
+    font-size: 26px;
+    color: #000;
+    font-weight: 600;
+    margin-right: 8px;
+}
+.product-view .original-price {
+    font-size: 18px;
+    color: #937979;
+    font-weight: 400;
+    text-decoration: line-through;
+}
+.product-view .btn1 {
+    border: 1px solid;
+    margin-right: 3px;
+    border-radius: 0px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.product-view .btn1:hover {
     background-color: rgba(235, 169, 55, 1);
-    color: white;
+    color: #fff;
 }
-/* MISC End */
+.product-view .input-quantity {
+    border: 1px solid #000;
+    margin-right: 3px;
+    font-size: 12px;
+    margin-top: 10px;
+    width: 58px;
+    outline: none;
+    text-align: center;
+}
+/* Product View End */

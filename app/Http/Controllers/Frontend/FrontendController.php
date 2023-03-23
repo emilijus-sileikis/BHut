@@ -79,4 +79,25 @@ class FrontendController extends Controller
         $products = $products->paginate(8);
         return view('frontend.products.all', compact('categories', 'products'));
     }
+
+    public function productView(string $category_slug, string $product_slug)
+    {
+        $category = Category::where('slug', $category_slug)->first();
+
+        if ($category) {
+
+            $product = $category->products()->where('slug', $product_slug)->where('status', '0')->first();
+
+            if ($product) {
+                return view('frontend.categories.products.view', compact('product', 'category'));
+            }
+            else {
+                return redirect()->back();
+            }
+
+        }
+        else {
+            return redirect()->back();
+        }
+    }
 }
