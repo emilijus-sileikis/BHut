@@ -30,6 +30,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth'])->group(function () {
 
     Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
+    Route::get('cart/remove/{id}', [App\Http\Controllers\Frontend\CartController::class, 'remove']);
 
 });
 

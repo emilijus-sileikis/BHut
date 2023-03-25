@@ -48,7 +48,7 @@
                                             <h5 class="mb-0">{{ $item->product->selling_price }}€</h5>
                                         </div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                            <a href="{{ url('cart/remove/'.$item->id) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
                                         </div>
                                     </div>
                                 </div>
