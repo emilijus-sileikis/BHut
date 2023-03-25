@@ -25,7 +25,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="fa fa-shopping-cart"></i> Cart (0)
+                                <i class="fa fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)
                             </a>
                         </li>
                         <li class="nav-item">

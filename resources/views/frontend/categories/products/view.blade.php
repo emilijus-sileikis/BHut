@@ -16,6 +16,8 @@
 
     <div class="py-3 py-md-5 bg-light">
         <div class="container">
+            <div id="success" class="alert alert-success" style="display: none;">Product added to cart successfully!</div>
+            <div id="error" class="alert alert-danger" style="display: none;">Please log in to add items to the cart.</div>
             <div class="row">
                 <div class="col-md-5 mt-3">
                     <div class="bg-white border img-fluid img-thumbnail">
@@ -42,13 +44,18 @@
                         </div>
                         <div class="mt-2">
                             <div class="input-group">
-                                <span class="btn btn1"><i class="fa fa-minus"></i></span>
-                                <input type="text" value="1" class="input-quantity" />
-                                <span class="btn btn1"><i class="fa fa-plus"></i></span>
+                                <span id="minus" class="btn btn1"><i class="fa fa-minus"></i></span>
+                                <input id="quantityInput" type="number" value="1" class="input-quantity" min="1" max="{{ $product->quantity }}" />
+                                <span id="plus" class="btn btn1"><i class="fa fa-plus"></i></span>
                             </div>
                         </div>
                         <div class="mt-2">
-                            <a href="" class="btn btn1"> <i class="fa fa-shopping-cart"></i> Add To Cart</a>
+                            <form id="add-to-cart-form" method="POST" action="/cart" enctype='multipart/form-data'>
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="qty" value="{{ $product->quantity }}">
+                                <button id="add-to-cart-btn" class="btn btn1" type="button" @if($product->quantity < 1) disabled @endif>@if($product->quantity < 1) Out Of Stock @else Add to Cart @endif</button>
+                            </form>
                             <a href="" class="btn btn1"> <i class="fa fa-heart"></i> Add To Wishlist </a>
                         </div>
                         <div class="mt-3">
@@ -76,5 +83,78 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const minusButton = document.getElementById('minus');
+        minusButton.addEventListener('click', function() {
+            let input = document.getElementById('quantityInput');
+            let min = parseInt(input.getAttribute('min'));
+            let value = parseInt(input.value);
+            if (value > min) {
+                input.value = value - 1;
+            }
+        });
+
+        const plusButton = document.getElementById('plus');
+        plusButton.addEventListener('click', function() {
+            let input = document.getElementById('quantityInput');
+            let max = parseInt(input.getAttribute('max'));
+            let value = parseInt(input.value);
+            if (value < max) {
+                input.value = value + 1;
+            }
+        });
+
+        const addToCartButton = document.getElementById('add-to-cart-btn');
+        addToCartButton.addEventListener('click', function() {
+            updateCartCount();
+            const isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+            const errorMessage = document.getElementById('error');
+            const successMessage = document.getElementById('success');
+            if (!isLoggedIn) {
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+
+                return;
+            }
+
+            const productId = {{ $product->id }};
+            const qty = parseInt(document.getElementById('quantityInput').value);
+            const url = '/cart';
+            const token = '{{ csrf_token() }}';
+
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('qty', qty);
+            formData.append('_token', token);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(data => {
+                    if (data.status === 200) {
+                        successMessage.style.display = 'block';
+
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 3000);
+                    }
+                })
+                .catch(error => console.error(error));
+
+            function updateCartCount() {
+                fetch("{{ route('cart.count') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('cart-count').innerText = data.count;
+                    })
+                    .catch(error => console.error('Error fetching cart count:', error));
+            }
+        });
+    </script>
 
 @endsection

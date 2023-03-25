@@ -50,6 +50,11 @@
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Other scripts -->
+    <script>
+        var cartCountUrl = "{{ route('cart.count') }}";
+    </script>
+    <script src="{{ asset('js/cart.js') }}"></script>
 
     @livewireScripts
 </body>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -109,6 +111,32 @@ class FrontendController extends Controller
         }
         else {
             return redirect()->back()->with('message', 'Empty Search');
+        }
+    }
+
+    public function addToCart(Request $request)
+    {
+        if (Auth::check()) {
+            Cart::create([
+                'user_id' => auth()->user()->id,
+                'product_id' => $request->product_id,
+                'quantity' => $request->qty,
+            ]);
+
+            $count = Cart::where('user_id', auth()->user()->id)->sum('quantity');
+            return response()->json(['count' => $count]);
+        } else {
+            return response()->json(['redirect' => route('login')]);
+        }
+    }
+
+    public function getCartCount()
+    {
+        if (Auth::check()) {
+            $count = Cart::where('user_id', auth()->user()->id)->sum('quantity');
+            return response()->json(['count' => $count]);
+        } else {
+            return response()->json(['count' => 0]);
         }
     }
 }
