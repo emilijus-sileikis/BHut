@@ -39,8 +39,8 @@
                             <a href="/" style="text-decoration: none; color: black;">Home</a> / <a href="/categories/{{ $category->slug }}" style="text-decoration: none; color: black;">{{ $product->category->name }}</a> / <a href="/categories/{{ $category->slug }}/{{ $product->name }}" style="text-decoration: none; color: black;">{{ $product->name }}</a>
                         </p>
                         <div>
-                            <span class="selling-price">${{ $product->selling_price }}</span>
-                            <span class="original-price">${{ $product->original_price }}</span>
+                            <span class="selling-price">{{ $product->selling_price }}€</span>
+                            <span class="original-price">{{ $product->original_price }}€</span>
                         </div>
                         <div class="mt-2">
                             <div class="input-group">

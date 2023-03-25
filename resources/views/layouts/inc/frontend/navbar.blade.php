@@ -24,7 +24,7 @@
                     <ul class="nav justify-content-end">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url('cart') }}">
                                 <i class="fa fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)
                             </a>
                         </li>

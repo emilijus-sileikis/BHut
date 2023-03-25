@@ -27,6 +27,12 @@ Route::get('/cart/count', [App\Http\Controllers\Frontend\FrontendController::cla
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
+
+});
+
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
 

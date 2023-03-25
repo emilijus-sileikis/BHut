@@ -122,8 +122,8 @@ class FrontendController extends Controller
                 'product_id' => $request->product_id,
                 'quantity' => $request->qty,
             ]);
-
-            $count = Cart::where('user_id', auth()->user()->id)->sum('quantity');
+            $user = Auth::user();
+            $count = Cart::where('user_id', $user->id)->get()->count();
             return response()->json(['count' => $count]);
         } else {
             return response()->json(['redirect' => route('login')]);
@@ -133,7 +133,8 @@ class FrontendController extends Controller
     public function getCartCount()
     {
         if (Auth::check()) {
-            $count = Cart::where('user_id', auth()->user()->id)->sum('quantity');
+            $user = Auth::user();
+            $count = Cart::where('user_id', $user->id)->get()->count();
             return response()->json(['count' => $count]);
         } else {
             return response()->json(['count' => 0]);
