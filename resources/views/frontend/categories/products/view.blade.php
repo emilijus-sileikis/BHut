@@ -32,7 +32,11 @@
                     <div class="product-view">
                         <h4 class="product-name">
                             {{ $product->name }}
-                            <label class="label-stock bg-success">In Stock</label>
+                            @if($product->quantity > 0)
+                                <label class="label-stock bg-success">In Stock</label>
+                            @else
+                                <label class="label-stock bg-danger">Out Of Stock</label>
+                            @endif
                         </h4>
                         <hr>
                         <p class="product-path">

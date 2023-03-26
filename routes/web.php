@@ -22,14 +22,14 @@ Route::get('/categories/{category_slug}', [App\Http\Controllers\Frontend\Fronten
 Route::get('/categories/{category_slug}/{product_slug}', [App\Http\Controllers\Frontend\FrontendController::class, 'productView']);
 Route::get('/products/all', [App\Http\Controllers\Frontend\FrontendController::class, 'all'])->name('products.all');
 Route::get('search', [App\Http\Controllers\Frontend\FrontendController::class, 'searchProducts']);
-Route::post('cart', [App\Http\Controllers\Frontend\FrontendController::class, 'addToCart']);
-Route::get('/cart/count', [App\Http\Controllers\Frontend\FrontendController::class, 'getCartCount'])->name('cart.count');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
+    Route::post('cart', [App\Http\Controllers\Frontend\CartController::class, 'addToCart']);
+    Route::get('/cart/count', [App\Http\Controllers\Frontend\CartController::class, 'getCartCount'])->name('cart.count');
     Route::get('cart/remove/{id}', [App\Http\Controllers\Frontend\CartController::class, 'remove']);
 
 });

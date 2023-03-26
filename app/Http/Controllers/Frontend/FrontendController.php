@@ -113,31 +113,4 @@ class FrontendController extends Controller
             return redirect()->back()->with('message', 'Empty Search');
         }
     }
-
-    public function addToCart(Request $request)
-    {
-        if (Auth::check()) {
-            Cart::create([
-                'user_id' => auth()->user()->id,
-                'product_id' => $request->product_id,
-                'quantity' => $request->qty,
-            ]);
-            $user = Auth::user();
-            $count = Cart::where('user_id', $user->id)->get()->count();
-            return response()->json(['count' => $count]);
-        } else {
-            return response()->json(['redirect' => route('login')]);
-        }
-    }
-
-    public function getCartCount()
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $count = Cart::where('user_id', $user->id)->get()->count();
-            return response()->json(['count' => $count]);
-        } else {
-            return response()->json(['count' => 0]);
-        }
-    }
 }

@@ -36,7 +36,7 @@
                                                 <i class="fas fa-minus"></i>
                                             </button>
 
-                                            <input id="form1" min="0" name="quantity" value="{{ $item->quantity }}" type="number"
+                                            <input id="form1" min="0" name="quantity" value="{{ $item->quantity }}" type="number" max="{{ $item->product->quantity }}"
                                                    class="form-control form-control-sm" />
 
                                             <button class="btn btn-link px-2"
