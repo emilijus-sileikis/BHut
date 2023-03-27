@@ -28,18 +28,24 @@ class FrontendController extends Controller
         return view('frontend.categories.category.index', compact('categories'));
     }
 
-    public function products($category_slug)
+    public function products($category_slug, Request $request)
     {
         $category = Category::where('slug', $category_slug)->first();
 
         if ($category) {
-            $products = $category->products()->where('status','0')->get();
+            $products = $category->products()->where('status','0');
 
-            return view('frontend.categories.products.index', compact('products', 'category'));
+            // Added price sorting
+            $this->addedPriceSorting($request, $products);
+
+            $products = $products->paginate(8);
+            if ($request->ajax()) {
+                return view('frontend.categories.products.index', compact('products'))->render();
+            }
+
+            return view('frontend.categories.products.index', compact('category', 'products'));
         }
-        else {
-            return redirect()->back();
-        }
+        else return redirect()->back();
     }
 
     public function all(Request $request)
@@ -58,20 +64,7 @@ class FrontendController extends Controller
         }
 
         // Added price sorting
-        if ($request->filled('price_sort')) {
-            $priceSort = $request->input('price_sort');
-            if (in_array($priceSort, ['asc', 'desc'])) {
-                $products->orderBy('selling_price', $priceSort);
-            }
-        }
-
-        // Added quantity sorting
-        if ($request->filled('qty_sort')) {
-            $qtySort = $request->input('qty_sort');
-            if (in_array($qtySort, ['asc', 'desc'])) {
-                $products->orderBy('quantity', $qtySort);
-            }
-        }
+        $this->addedPriceSorting($request, $products);
 
         if ($request->ajax()) {
             $products = $products->paginate(8);
@@ -111,6 +104,29 @@ class FrontendController extends Controller
         }
         else {
             return redirect()->back()->with('message', 'Empty Search');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $products
+     * @return void
+     */
+    public function addedPriceSorting(Request $request, $products): void
+    {
+        if ($request->filled('price_sort')) {
+            $priceSort = $request->input('price_sort');
+            if (in_array($priceSort, ['asc', 'desc'])) {
+                $products->orderBy('selling_price', $priceSort);
+            }
+        }
+
+        // Added quantity sorting
+        if ($request->filled('qty_sort')) {
+            $qtySort = $request->input('qty_sort');
+            if (in_array($qtySort, ['asc', 'desc'])) {
+                $products->orderBy('quantity', $qtySort);
+            }
         }
     }
 }

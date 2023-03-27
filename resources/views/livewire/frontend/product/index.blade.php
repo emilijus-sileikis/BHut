@@ -1,8 +1,7 @@
-<div>
-    <div class="row">
+<div id="products-wrapper">
+    <div class="row" id="products-list">
 
         @forelse($products as $item)
-
             <div class="col-md-3">
                 <div class="product-card">
                     <div class="product-card-img">
@@ -12,6 +11,8 @@
                         @else
                             <label class="stock bg-danger">Out Of Stock</label>
                         @endif
+
+                        <label class="stock bg-success" style="position: relative; float: right;">{{$item->quantity}}</label>
 
                         @if($item->images->count() > 0)
                             <a href="{{ url('categories/'.$item->category->slug.'/'.$item->slug) }}">
@@ -32,16 +33,13 @@
                     </div>
                 </div>
             </div>
-
         @empty
-
             <div class="col-md-12">
-                <div class="p-2">
-                    <h4>No Products Available For {{ $category->name }}</h4>
-                </div>
+                <h5>No Products Available</h5>
             </div>
-
         @endforelse
-
+        <div>
+            {{ $products->links() }}
+        </div>
     </div>
 </div>
