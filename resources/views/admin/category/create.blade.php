@@ -27,7 +27,7 @@
                                     <textarea id="descr" name="description" class="form-control" rows="3" maxlength="200" required></textarea>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Image</label>
+                                <label>Image (MAX: 4MB)</label>
                                     <input type="file" name="image" class="form-control">
                             </div>
                             <div class="col-md-6 mb-3">

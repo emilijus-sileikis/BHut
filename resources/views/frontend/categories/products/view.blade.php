@@ -22,7 +22,7 @@
                 <div class="col-md-5 mt-3">
                     <div class="bg-white border img-fluid img-thumbnail">
                         @if($product->images)
-                            <img src="{{ asset($product->images[0]->image) }}" class="w-100" alt="Img">
+                            <img src="{{ asset($product->images[0]->image) }}" class="w-100" alt="Img" style="max-height: 500px; max-width: 100%; object-fit: contain;">
                         @else
                             No Image Added
                         @endif

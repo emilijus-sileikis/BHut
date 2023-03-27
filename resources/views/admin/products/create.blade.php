@@ -109,7 +109,7 @@
 
                             <div class="tab-pane fade border p-3" id="img-tab-pane" role="tabpanel" aria-labelledby="img-tab" tabindex="0">
                                 <div class="mb-3 mt-3">
-                                    <label>Upload Images</label>
+                                    <label>Upload Images (MAX: 4MB)</label>
                                     <input type="file" name="image[]" multiple class="form-control"/>
                                 </div>
                             </div>
