@@ -95,6 +95,22 @@ class FrontendController extends Controller
 
     public function searchProducts(Request $request)
     {
+
+        $validatedData = $request->validate([
+            'search' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^[a-zA-Z0-9\s\-\.,]+$/', $value)) {
+                        $fail('Please use only alphanumeric characters, spaces, hyphens, periods, and commas.');
+                    }
+                },
+            ],
+        ]);
+
+        $search = e($validatedData['search']); // Escape the input using Laravel's e() function
+
         if ($request->search) {
             $searchProducts = Product::where('name', 'LIKE', '%'.$request->search.'%')->latest()->paginate(4);
             return view('frontend.pages.search', compact('searchProducts'));

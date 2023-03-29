@@ -11,9 +11,10 @@
                     </a>
                 </div>
                 <div class="col-md-5 my-auto">
-                    <form action="{{ url('search') }}" method="GET" role="search">
+                    <form action="{{ url('search') }}" method="POST" role="search">
+                        @csrf
                         <div class="input-group">
-                            <input type="search" name="search" value="{{ Request::get('search') }}" placeholder="Search for something..." class="form-control" />
+                            <input type="search" name="search" id="search-input" value="{{ Request::get('search') }}" placeholder="Search for something..." class="form-control" maxlength="50"/>
                             <button class="btn bg-white" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -114,4 +115,25 @@
     function myFunction(x) {
         x.classList.toggle("change");
     }
+</script>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const searchInput = document.getElementById('search-input');
+        searchInput.value = searchInput.value.trim(); // Remove extra spaces
+
+        if (searchInput.value === '') {
+            event.preventDefault(); // Prevent form submission if empty
+            alert('Please enter a search term.');
+        } else {
+            const regex = /^[a-zA-Z0-9\s\-\.,]+$/; // Allow alphanumeric, spaces, hyphens, periods, and commas
+
+            if (!regex.test(searchInput.value)) {
+                event.preventDefault(); // Prevent form submission if input contains harmful characters
+                alert('Please use only alphanumeric characters, spaces, hyphens, periods, and commas.');
+            } else {
+                searchInput.value = searchInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // Encode special characters
+            }
+        }
+    });
 </script>
