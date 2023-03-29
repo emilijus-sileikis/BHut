@@ -39,9 +39,6 @@ class FrontendController extends Controller
             $this->addedPriceSorting($request, $products);
 
             $products = $products->paginate(8);
-            if ($request->ajax()) {
-                return view('frontend.categories.products.index', compact('products'))->render();
-            }
 
             return view('frontend.categories.products.index', compact('category', 'products'));
         }

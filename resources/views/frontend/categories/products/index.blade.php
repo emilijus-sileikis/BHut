@@ -22,40 +22,44 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            let form = $('#filter-form');
-            let url = form.attr('action');
-
-            // Ajax submit
-            function fetchResults() {
-                $.ajax({
-                    url: url,
-                    data: form.serialize(),
-                    type: "GET",
-                    success: function(response) {
-                        $('#products-wrapper').html(response);
-                    },
-                    error: function(xhr) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            }
-
             // Clear button
             const clearFilterButton = document.querySelector('#clear-filter');
+
+            // Sort buttons
+            const priceButton = document.querySelector('#price_sort');
+            const qtyButton = document.querySelector('#qty_sort');
+
+            priceButton.addEventListener('change' , () => {
+                if (qtyButton.value !== "") {
+                    qtyButton.value = "";
+                }
+            });
+
+            qtyButton.addEventListener('change' , () => {
+                if (priceButton.value !== "") {
+                    priceButton.value = "";
+                }
+            });
 
             function resetForm() {
                 // Reset the price
                 document.querySelector('#price_sort').value = '';
                 document.querySelector('#qty_sort').value = '';
+
+                // Reset the URL
+                const url = window.location.href;
+                const urlObj = new URL(url);
+
+                urlObj.search = '';
+                urlObj.hash = '';
+
+                window.location.href = urlObj.toString();
+
             }
 
-            clearFilterButton.addEventListener('click', (e) => {
-                e.preventDefault();
+            clearFilterButton.addEventListener('click', () => {
                 clearFilterButton.blur();
-
                 resetForm();
-
-                fetchResults();
             });
         });
     </script>
