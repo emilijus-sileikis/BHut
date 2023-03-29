@@ -139,12 +139,22 @@
                 method: 'POST',
                 body: formData
             })
+                .then(response => response.json())
                 .then(data => {
-                    if (data.status === 200) {
+                    if (data.count !== undefined) {
+                        updateCartCount();
                         successMessage.style.display = 'block';
 
                         setTimeout(() => {
                             successMessage.style.display = 'none';
+                        }, 3000);
+                    } else if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        errorMessage.style.display = 'block';
+
+                        setTimeout(() => {
+                            errorMessage.style.display = 'none';
                         }, 3000);
                     }
                 })

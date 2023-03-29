@@ -23,7 +23,7 @@
                                             @if($item->product->images)
                                                 <img
                                                     src="{{ asset($item->product->images[0]->image) }}"
-                                                    class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                                    class="img-fluid rounded-3" alt="Cotton T-shirt" style="width: 100%; max-height: 150px; object-fit: contain;">
                                             @endif
 
                                         </div>

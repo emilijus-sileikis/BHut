@@ -25,11 +25,13 @@ Route::post('search', [App\Http\Controllers\Frontend\FrontendController::class, 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/cart/count', [App\Http\Controllers\Frontend\CartController::class, 'getCartCount'])->name('cart.count');
+
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
     Route::post('cart', [App\Http\Controllers\Frontend\CartController::class, 'addToCart']);
-    Route::get('/cart/count', [App\Http\Controllers\Frontend\CartController::class, 'getCartCount'])->name('cart.count');
     Route::get('cart/remove/{id}', [App\Http\Controllers\Frontend\CartController::class, 'remove']);
 
 });
