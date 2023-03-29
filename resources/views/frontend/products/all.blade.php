@@ -61,6 +61,22 @@
                 });
             });
 
+            // Sort buttons
+            const priceButton = document.querySelector('#price_sort');
+            const qtyButton = document.querySelector('#qty_sort');
+
+            priceButton.addEventListener('change' , () => {
+                if (qtyButton.value !== "") {
+                    qtyButton.value = "";
+                }
+            });
+
+            qtyButton.addEventListener('change' , () => {
+                if (priceButton.value !== "") {
+                    priceButton.value = "";
+                }
+            });
+
             // Clear button
             const clearFilterButton = document.querySelector('#clear-filter');
 
