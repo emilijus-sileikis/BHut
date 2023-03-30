@@ -32,11 +32,9 @@
                     <div class="product-view">
                         <h4 class="product-name">
                             {{ $product->name }}
-                            @if($product->quantity > 0)
-                                <label class="label-stock bg-success">In Stock</label>
-                            @else
-                                <label class="label-stock bg-danger">Out Of Stock</label>
-                            @endif
+                            <label class="label-stock bg-success" id="inStock">In Stock</label>
+                            <label class="label-stock bg-danger" id="outOfStock" style="display: none;">Out Of Stock</label>
+
                         </h4>
                         <hr>
                         <p class="product-path">
@@ -58,7 +56,7 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="hidden" name="qty" value="{{ $product->quantity }}">
-                                <button id="add-to-cart-btn" class="btn btn1" type="button" @if($product->quantity < 1) disabled @endif>@if($product->quantity < 1) Out Of Stock @else Add to Cart @endif</button>
+                                <button id="add-to-cart-btn" class="btn btn1" type="button">Add to Cart</button>
                             </form>
                             <a href="" class="btn btn1"> <i class="fa fa-heart"></i> Add To Wishlist </a>
                         </div>
@@ -143,6 +141,7 @@
                 .then(data => {
                     if (data.count !== undefined) {
                         updateCartCount();
+                        updateProductQuantity(data.qty);
                         successMessage.style.display = 'block';
 
                         setTimeout(() => {
@@ -167,6 +166,27 @@
                         document.getElementById('cart-count').innerText = data.count;
                     })
                     .catch(error => console.error('Error fetching cart count:', error));
+            }
+
+            function updateProductQuantity(qty) {
+                const qtyEl = document.getElementById('quantityInput');
+                const inStock = document.getElementById('inStock');
+                const outStock = document.getElementById('outOfStock');
+                const cartBtn = document.getElementById('add-to-cart-btn');
+
+                qtyEl.value = '1';
+
+                if (qty > 0) {
+                    qtyEl.max = qty;
+                } else {
+                    qtyEl.max = '1';
+                    inStock.style.display = 'none';
+                    outStock.style.display = 'block';
+
+                    cartBtn.disabled = true;
+                    cartBtn.innerText = 'Out Of Stock';
+                }
+
             }
         });
     </script>

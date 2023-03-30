@@ -35,8 +35,9 @@ class CartController extends Controller
 
                 $user = Auth::user();
                 $count = Cart::where('user_id', $user->id)->get()->count();
+                $qty = $product->quantity;
 
-                return response()->json(['count' => $count]);
+                return response()->json(['count' => $count, 'qty' => $qty]);
             } else {
                 return response()->json(['error' => 'Product not found.']);
             }
