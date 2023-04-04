@@ -31,7 +31,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="fa fa-heart"></i> Wishlist (0)
+                                <i class="fa fa-heart"></i> Wishlist (<span id="wishlist-count">0</span>)
                             </a>
                         </li>
                         @guest

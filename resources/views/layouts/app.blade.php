@@ -53,8 +53,10 @@
     <!-- Other scripts -->
     <script>
         var cartCountUrl = "{{ route('cart.count') }}";
+        var wishlistCountUrl = "{{ route('wishlist.count') }}";
     </script>
     <script src="{{ asset('js/cart.js') }}"></script>
+    <script src="{{ asset('js/wishlist.js') }}"></script>
 
     @livewireScripts
 </body>

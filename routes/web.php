@@ -26,13 +26,18 @@ Route::post('search', [App\Http\Controllers\Frontend\FrontendController::class, 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/cart/count', [App\Http\Controllers\Frontend\CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/wishlist/count', [App\Http\Controllers\Frontend\WishlistController::class, 'getWishlistCount'])->name('wishlist.count');
 
 
 Route::middleware(['auth'])->group(function () {
 
+    //Cart Routes
     Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
     Route::post('cart', [App\Http\Controllers\Frontend\CartController::class, 'addToCart']);
     Route::get('cart/remove/{id}', [App\Http\Controllers\Frontend\CartController::class, 'remove']);
+
+    //Wishlist Routes
+    Route::post('wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'addToWishlist']);
 
 });
 

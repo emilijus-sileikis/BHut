@@ -17,7 +17,10 @@
     <div class="py-3 py-md-5 bg-light">
         <div class="container">
             <div id="success" class="alert alert-success" style="display: none;">Product added to cart successfully!</div>
+            <div id="success2" class="alert alert-success" style="display: none;">Product added to wishlist successfully!</div>
             <div id="error" class="alert alert-danger" style="display: none;">Please log in to add items to the cart.</div>
+            <div id="error2" class="alert alert-danger" style="display: none;">Please log in to add items to the wishlist.</div>
+            <div id="inWishlist" class="alert alert-danger" style="display: none;">Item already in wishlist!</div>
             <div class="row">
                 <div class="col-md-5 mt-3">
                     <div class="bg-white border img-fluid img-thumbnail">
@@ -58,7 +61,12 @@
                                 <input type="hidden" name="qty" value="{{ $product->quantity }}">
                                 <button id="add-to-cart-btn" class="btn btn1" type="button">Add to Cart</button>
                             </form>
-                            <a href="" class="btn btn1"> <i class="fa fa-heart"></i> Add To Wishlist </a>
+
+                            <form id="add-to-wishlist-form" method="POST" action="/wishlist" enctype='multipart/form-data'>
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button id="add-to-wishlist-btn" class="btn btn1" type="button"> <i class="fa fa-heart"></i> Add To Wishlist </button>
+                            </form>
                         </div>
                         <div class="mt-3">
                             <h5 class="mb-0">Small Description</h5>
@@ -187,6 +195,72 @@
                     cartBtn.innerText = 'Out Of Stock';
                 }
 
+            }
+        });
+
+        const addToWishlistButton = document.getElementById('add-to-wishlist-btn');
+        addToWishlistButton.addEventListener('click', function() {
+            updateWishlistCount();
+            const isLoggedIn = {{ Auth::check() ? 'true' : 'false' }};
+            const errorMessage = document.getElementById('error2');
+            const successMessage = document.getElementById('success2');
+            const alreadyPresent = document.getElementById('inWishlist');
+            if (!isLoggedIn) {
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+
+                return;
+            }
+
+            const productId = {{ $product->id }};
+            const url = '/wishlist';
+            const token = '{{ csrf_token() }}';
+
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('_token', token);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.count !== undefined) {
+                        updateWishlistCount();
+                        successMessage.style.display = 'block';
+
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 3000);
+                    } else if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else if (data.error) {
+                        alreadyPresent.style.display = 'block';
+
+                        setTimeout(() => {
+                            alreadyPresent.style.display = 'none';
+                        }, 3000);
+                    } else {
+                        errorMessage.style.display = 'block';
+
+                        setTimeout(() => {
+                            errorMessage.style.display = 'none';
+                        }, 3000);
+                    }
+                })
+                .catch(error => console.error(error));
+
+            function updateWishlistCount() {
+                fetch("{{ route('wishlist.count') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('wishlist-count').innerText = data.count;
+                    })
+                    .catch(error => console.error('Error fetching wishlist count:', error));
             }
         });
     </script>
