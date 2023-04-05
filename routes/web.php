@@ -28,6 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/cart/count', [App\Http\Controllers\Frontend\CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/wishlist/count', [App\Http\Controllers\Frontend\WishlistController::class, 'getWishlistCount'])->name('wishlist.count');
 
+Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankYou']);
 
 Route::middleware(['auth'])->group(function () {
 
@@ -38,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Wishlist Routes
     Route::post('wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'addToWishlist']);
+
+    //Checkout Routes
+    Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
 
 });
 

@@ -142,4 +142,9 @@ class FrontendController extends Controller
             }
         }
     }
+
+    public function thankYou()
+    {
+        return view('frontend.thankyou');
+    }
 }
