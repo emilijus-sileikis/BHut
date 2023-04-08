@@ -23,7 +23,7 @@ class CheckoutShow extends Component
             'city' => 'required',
             'pincode' => 'required|string|max:10',
             'cardName' => 'required|string|max:150',
-            'cardNum' => 'required|string|max:16',
+            'cardNum' => 'required|string|max:19',
             'cardExp' => 'required|string|max:5',
             'cardCVV' => 'required|string|max:3',
         ];

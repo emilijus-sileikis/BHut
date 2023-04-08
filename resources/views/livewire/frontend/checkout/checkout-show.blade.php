@@ -76,7 +76,7 @@
                             <label for="country">Country</label>
                             <select class="custom-select d-block w-100" wire:model="country" id="country" required>
                                 <option value="">Choose...</option>
-                                <option>United States</option>
+                                <option>Lithuania</option>
                             </select>
                             @error('country') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
@@ -85,14 +85,18 @@
                             <label for="state">City</label>
                             <select class="custom-select d-block w-100" wire:model="city" id="state" required>
                                 <option value="">Choose...</option>
-                                <option>California</option>
+                                <option>Vilnius</option>
+                                <option>Kaunas</option>
+                                <option>Klaipėda</option>
+                                <option>Panevėžys</option>
+                                <option>Šiauliai</option>
                             </select>
                             @error('city') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
 
                         <div class="col-md-3 mb-3">
                             <label for="zip">Zip</label>
-                            <input type="text" class="form-control" wire:model="pincode" id="zip" placeholder="" maxlength="10" required>
+                            <input type="number" class="form-control" wire:model="pincode" id="zip" placeholder="" maxlength="10" required>
                             @error('pincode') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
 
@@ -105,7 +109,7 @@
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
                             <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                            <label class="custom-control-label" for="credit">Credit card</label>
+                            <label class="custom-control-label" for="credit">Mastercard</label>
                         </div>
 
                         <div class="custom-control custom-radio">
@@ -114,39 +118,41 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-name">Name on card</label>
-                            <input type="text" class="form-control" wire:model="cardName" id="cc-name" placeholder="" maxlength="150" required>
-                            <small class="text-muted">Full name as displayed on card</small>
-                            @error('cardName') <small class="text-danger">{{ $message }}</small> @enderror
+                    <div id="card-info">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name">Name on card</label>
+                                <input type="text" class="form-control" wire:model="cardName" id="cc-name" placeholder="Name Lastname" maxlength="150" required>
+                                <small class="text-muted">Full name as displayed on card</small>
+                                @error('cardName') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number">Credit card number</label>
+                                <input type="text" class="form-control" wire:model="cardNum" id="cc-number" placeholder="1234-1234-1234-1234" maxlength="19" required>
+                                @error('cardNum') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-number">Credit card number</label>
-                            <input type="text" class="form-control" wire:model="cardNum" id="cc-number" placeholder="" maxlength="16" required>
-                            @error('cardNum') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-expiration">Expiration</label>
+                                <input type="text" class="form-control" wire:model="cardExp" id="cc-expiration" placeholder="MM/YY" maxlength="5" required>
+                                @error('cardExp') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
 
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="text" class="form-control" wire:model="cardExp" id="cc-expiration" placeholder="" maxlength="5" required>
-                            @error('cardExp') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-cvv">CVV</label>
-                            <input type="text" class="form-control" wire:model="cardCVV" id="cc-cvv" placeholder="" maxlength="3" required>
-                            @error('cardCVV') <small class="text-danger">{{ $message }}</small> @enderror
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-cvv">CVV</label>
+                                <input type="text" class="form-control" wire:model="cardCVV" id="cc-cvv" placeholder="123" maxlength="3" required>
+                                @error('cardCVV') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
                         </div>
                     </div>
 
                     <hr class="mb-4">
 
                     <div id="credit-card-btn">
-                        <button type="button" wire:click="cardOrder" class="btn btn-primary btn-lg btn-block" >Continue with Credit Card</button>
+                        <button type="button" wire:click="cardOrder" class="btn btn-primary btn-lg btn-block" >Continue with Mastercard Card</button>
                     </div>
 
                     <div id="paypal-btn" style="display: none;">
@@ -163,16 +169,64 @@
         const paypalBtn = document.getElementById('paypal-btn');
         const creditRadio = document.getElementById('credit');
         const paypalRadio = document.getElementById('paypal');
+        const cardPart = document.getElementById('card-info');
 
         creditRadio.addEventListener('change', function() {
             creditCardBtn.style.display = 'block';
+            cardPart.style.display = 'block';
             paypalBtn.style.display = 'none';
         });
 
         paypalRadio.addEventListener('change', function() {
             creditCardBtn.style.display = 'none';
+            cardPart.style.display = 'none';
             paypalBtn.style.display = 'block';
         });
+
+        var cardNumberInput = document.getElementById('cc-number');
+
+        cardNumberInput.addEventListener('input', function(e) {
+            var value = e.target.value;
+
+            // Remove non-numeric characters
+            value = value.replace(/\D/g, '');
+
+            // Add dashes every 4 characters, unless it's the end of the input
+            var formattedValue = '';
+            for (var i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0 && i < value.length - 1) {
+                    formattedValue += '-';
+                }
+                formattedValue += value[i];
+            }
+
+            e.target.value = formattedValue;
+        });
+
+        const expDateInput = document.getElementById('cc-expiration');
+
+        expDateInput.addEventListener('input', function(event) {
+            const value = event.target.value.replace(/\D/g, '');
+            const month = value.slice(0, 2);
+            const year = value.slice(2, 4);
+            const separator = value.length > 2 ? '/' : '';
+            event.target.value = `${month}${separator}${year}`;
+        });
+
+        const cvvInput = document.getElementById('cc-cvv');
+
+        cvvInput.addEventListener('input', function(event) {
+            // Remove all non-digit characters
+            var cvv = cvvInput.value.replace(/\D/g, '');
+
+            // Trim any extra spaces at the end
+            cvv = cvv.trim();
+
+            // Update the input field value
+            event.target.value = cvv;
+        });
+
+
     </script>
 
 </div>
