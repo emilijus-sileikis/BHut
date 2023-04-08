@@ -65,9 +65,12 @@ class CheckoutShow extends Component
     {
         $cardOrder = $this->placeOrder();
 
-        Cart::where('user_id', auth()->user()->getAuthIdentifier())->delete();
-
         if ($cardOrder) {
+
+            Cart::where('user_id', auth()->user()->getAuthIdentifier())->delete();
+
+            session()->flash('message', 'Order Placed Successfully!');
+
             $this->dispatchBrowserEvent('message', [
                 'text' => 'Order Placed Successfully!',
                 'type' => 'success',

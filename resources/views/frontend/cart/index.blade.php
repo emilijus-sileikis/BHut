@@ -42,21 +42,20 @@
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                             <button class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown(); handleQuantityChange({{ $item->id }})">
                                                 <i class="fas fa-minus"></i>
                                             </button>
 
-                                            <input id="form1" min="0" name="quantity" value="{{ $item->quantity }}"
-                                                   type="number" max="{{ $item->product->quantity }}"
-                                                   class="form-control form-control-sm"/>
+                                            <input id="form{{ $item->id }}" name="quantity" value="{{ $item->quantity }}" type="number" class="form-control" min="0"
+                                                   max="{{ $item->product->quantity }}" data-price="{{ $item->product->selling_price }}">
 
                                             <button class="btn btn-link px-2"
-                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp(); handleQuantityChange({{ $item->id }})">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
                                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                            <h5 class="mb-0">{{ $item->product->selling_price }}€</h5>
+                                            <h5 class="mb-0" id="total{{ $item->id }}">{{ $item->product->selling_price * $item->quantity }}€</h5>
                                         </div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                             <a href="{{ url('cart/remove/'.$item->id) }}" class="text-danger"><i
@@ -73,9 +72,9 @@
                     @if(count($cart) > 0)
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="float-left">Total: {{ $total }}€</h3>
+                                <h3 class="float-left">Total: <span id="total">{{ $total }}€</span></h3>
                                 <div class="mb-3" style="height: 1px; background: grey;"></div>
-                                <a href="{{ url('/checkout') }}" class="btn btn-primary btn-lg">Proceed to Pay</a>
+                                <a href="{{ url('/checkout') }}" class="btn btn-primary btn-lg" data-id="pay-btn">Proceed to Pay</a>
                             </div>
                         </div>
                     @endif
@@ -84,5 +83,65 @@
             </div>
         </div>
     </section>
+
+    <script>
+        function handleQuantityChange(itemId) {
+            const input = document.getElementById(`form${itemId}`);
+            const value = parseInt(input.value);
+            const price = parseFloat(input.dataset.price);
+            const totalElement = document.getElementById(`total${itemId}`);
+            const totalPrice = document.getElementById('total');
+            const allItems = document.querySelectorAll('[data-price]');
+
+            if (!isNaN(value) && value >= 0) {
+                const total = Array.from(allItems).reduce((acc, item) => {
+                    const itemPrice = parseFloat(item.dataset.price);
+                    const itemQuantity = parseInt(item.value);
+                    return acc + (itemPrice * itemQuantity);
+                }, 0);
+                totalElement.textContent = (value * price).toFixed(2) + '€';
+                totalPrice.textContent = total.toFixed(2) + '€';
+            }
+        }
+
+        document.querySelector('a[data-id="pay-btn"]').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var quantities = [];
+            var itemIds = [];
+
+            document.querySelectorAll('input[name="quantity"]').forEach(function(element, index) {
+                quantities.push(element.value);
+                itemIds.push(element.getAttribute('id').substr(4));
+            });
+
+            // Send a fetch request to update the quantities
+            fetch('{{ url("/cart/update") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    quantities: quantities,
+                    itemIds: itemIds
+                })
+            })
+                .then(function(response) {
+                    if (response.ok) {
+                        window.location.href = 'checkout';
+                    } else {
+                        // Handle error response
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .catch(function(error) {
+                    // Handle fetch error
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+
+
+    </script>
 
 @endsection

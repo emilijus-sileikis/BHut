@@ -57,6 +57,37 @@ class CartController extends Controller
         }
     }
 
+    public function getCartPrice()
+    {
+        $user = Auth::user();
+        $total = 0;
+        $cart = Cart::where('user_id', $user->getAuthIdentifier())->get();
+
+        foreach ($cart as $item) {
+            $total += $item->product->selling_price * $item->quantity;
+        }
+
+        return response()->json(['count' => $total]);
+    }
+
+    public function update(Request $request)
+    {
+        $quantities = $request->input('quantities');
+        $itemIds = $request->input('itemIds');
+
+        // Loop through the item IDs and update the quantities
+        for ($i = 0; $i < count($itemIds); $i++) {
+            $cartItem = Cart::find($itemIds[$i]);
+
+            if ($cartItem) {
+                $cartItem->quantity = $quantities[$i];
+                $cartItem->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
+
     public function remove(int $id)
     {
         $cartItem = Cart::findOrFail($id);
