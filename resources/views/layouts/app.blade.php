@@ -59,5 +59,6 @@
     <script src="{{ asset('js/wishlist.js') }}"></script>
 
     @livewireScripts
+    @stack('scripts')
 </body>
 </html>

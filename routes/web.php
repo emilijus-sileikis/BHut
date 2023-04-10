@@ -28,7 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/cart/count', [App\Http\Controllers\Frontend\CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/price', [App\Http\Controllers\Frontend\CartController::class, 'getCartPrice'])->name('cart.price');
 Route::get('/wishlist/count', [App\Http\Controllers\Frontend\WishlistController::class, 'getWishlistCount'])->name('wishlist.count');
-
+Route::post('/payment/{payment_id}', [App\Http\Livewire\Frontend\Checkout\CheckoutShow::class, 'paidOnlineOrder']);
 Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankYou']);
 
 Route::middleware(['auth'])->group(function () {

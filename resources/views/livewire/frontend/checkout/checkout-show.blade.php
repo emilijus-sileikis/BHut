@@ -96,7 +96,7 @@
 
                         <div class="col-md-3 mb-3">
                             <label for="zip">Zip</label>
-                            <input type="number" class="form-control" wire:model="pincode" id="zip" placeholder="" maxlength="10" required>
+                            <input type="text" class="form-control" wire:model="pincode" id="zip" placeholder="" maxlength="10" required>
                             @error('pincode') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
 
@@ -104,129 +104,74 @@
 
                     <hr class="mb-4">
 
-                    <h4 class="mb-3">Payment Information</h4>
-
-                    <div class="d-block my-3">
-                        <div class="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                            <label class="custom-control-label" for="credit">Mastercard</label>
-                        </div>
-
-                        <div class="custom-control custom-radio">
-                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                            <label class="custom-control-label" for="paypal">PayPal</label>
-                        </div>
-                    </div>
-
-                    <div id="card-info">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-name">Name on card</label>
-                                <input type="text" class="form-control" wire:model="cardName" id="cc-name" placeholder="Name Lastname" maxlength="150" required>
-                                <small class="text-muted">Full name as displayed on card</small>
-                                @error('cardName') <small class="text-danger">{{ $message }}</small> @enderror
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label for="cc-number">Credit card number</label>
-                                <input type="text" class="form-control" wire:model="cardNum" id="cc-number" placeholder="1234-1234-1234-1234" maxlength="19" required>
-                                @error('cardNum') <small class="text-danger">{{ $message }}</small> @enderror
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-expiration">Expiration</label>
-                                <input type="text" class="form-control" wire:model="cardExp" id="cc-expiration" placeholder="MM/YY" maxlength="5" required>
-                                @error('cardExp') <small class="text-danger">{{ $message }}</small> @enderror
-                            </div>
-
-                            <div class="col-md-3 mb-3">
-                                <label for="cc-cvv">CVV</label>
-                                <input type="text" class="form-control" wire:model="cardCVV" id="cc-cvv" placeholder="123" maxlength="3" required>
-                                @error('cardCVV') <small class="text-danger">{{ $message }}</small> @enderror
-                            </div>
-                        </div>
-                    </div>
+                    <h4 class="mb-3">Payment</h4>
 
                     <hr class="mb-4">
 
-                    <div id="credit-card-btn">
-                        <button type="button" wire:click="cardOrder" class="btn btn-primary btn-lg btn-block" >Continue with Mastercard Card</button>
-                    </div>
-
-                    <div id="paypal-btn" style="display: none;">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue with PayPal</button>
-                    </div>
+                    <div id="paypal-button-container" wire:ignore></div>
 
                 </form>
             </div>
         </div>
     </div>
 
-    <script>
-        const creditCardBtn = document.getElementById('credit-card-btn');
-        const paypalBtn = document.getElementById('paypal-btn');
-        const creditRadio = document.getElementById('credit');
-        const paypalRadio = document.getElementById('paypal');
-        const cardPart = document.getElementById('card-info');
+    @push('scripts')
 
-        creditRadio.addEventListener('change', function() {
-            creditCardBtn.style.display = 'block';
-            cardPart.style.display = 'block';
-            paypalBtn.style.display = 'none';
-        });
+        <script src="https://www.paypal.com/sdk/js?client-id=ARZhdxsfxWMI1lY26csal6T4KLpQJ6byN4bSllHWEh6Pxt5_B466lwCrSl1dC84ulh7JveynrrGY5pfb&currency=EUR"></script>
 
-        paypalRadio.addEventListener('change', function() {
-            creditCardBtn.style.display = 'none';
-            cardPart.style.display = 'none';
-            paypalBtn.style.display = 'block';
-        });
+        <script>
+            const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            paypal.Buttons({
 
-        var cardNumberInput = document.getElementById('cc-number');
+                onClick() {
 
-        cardNumberInput.addEventListener('input', function(e) {
-            var value = e.target.value;
+                    // Show a validation error if the checkbox is not checked
+                    if (!document.getElementById('firstName').value
+                        || !document.getElementById('lastName').value
+                        || !document.getElementById('email').value
+                        || !document.getElementById('country').value
+                        || !document.getElementById('state').value
+                        || !document.getElementById('address').value
+                        || !document.getElementById('zip').value
+                    )
+                    {
+                         Livewire.emit('validationForAll');
+                        return false;
+                    } else {
+                        @this.set('f_name', document.getElementById('firstName').value);
+                        @this.set('l_name', document.getElementById('lastName').value);
+                        @this.set('email', document.getElementById('email').value);
+                        @this.set('country', document.getElementById('country').value);
+                        @this.set('city', document.getElementById('state').value);
+                        @this.set('address', document.getElementById('address').value);
+                        @this.set('pincode', document.getElementById('zip').value);
+                    }
+                },
 
-            // Remove non-numeric characters
-            value = value.replace(/\D/g, '');
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: {{ $total }}
+                            }
+                        }]
+                    });
+                },
 
-            // Add dashes every 4 characters, unless it's the end of the input
-            var formattedValue = '';
-            for (var i = 0; i < value.length; i++) {
-                if (i > 0 && i % 4 === 0 && i < value.length - 1) {
-                    formattedValue += '-';
+                // Finalize the transaction on the server after payer approval
+                onApprove(data, actions) {
+                    return actions.order.capture().then(function (orderData) {
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        const transaction = orderData.purchase_units[0].payments.captures[0];
+
+                        if (transaction.status === "COMPLETED") {
+                            Livewire.emit('transactionEmit', transaction.id);
+                        }
+                    });
                 }
-                formattedValue += value[i];
-            }
+            }).render('#paypal-button-container');
+        </script>
 
-            e.target.value = formattedValue;
-        });
-
-        const expDateInput = document.getElementById('cc-expiration');
-
-        expDateInput.addEventListener('input', function(event) {
-            const value = event.target.value.replace(/\D/g, '');
-            const month = value.slice(0, 2);
-            const year = value.slice(2, 4);
-            const separator = value.length > 2 ? '/' : '';
-            event.target.value = `${month}${separator}${year}`;
-        });
-
-        const cvvInput = document.getElementById('cc-cvv');
-
-        cvvInput.addEventListener('input', function(event) {
-            // Remove all non-digit characters
-            var cvv = cvvInput.value.replace(/\D/g, '');
-
-            // Trim any extra spaces at the end
-            cvv = cvv.trim();
-
-            // Update the input field value
-            event.target.value = cvv;
-        });
-
-
-    </script>
+    @endpush
 
 </div>

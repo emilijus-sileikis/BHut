@@ -10,8 +10,44 @@ use Livewire\Component;
 
 class CheckoutShow extends Component
 {
-    public $f_name, $l_name, $email, $address, $country, $city, $pincode, $cardName, $cardNum, $cardExp, $cardCVV, $payment_id = NULL;
+    public $f_name, $l_name, $email, $address, $country, $city, $pincode, $payment_id = NULL;
 
+    protected $listeners = [
+        'validationForAll',
+        'transactionEmit' => 'paidOnlineOrder'
+    ];
+
+    public function paidOnlineOrder($value)
+    {
+
+        $this->payment_id = $value;
+
+        $orderTest = $this->placeOrder();
+
+        if ($orderTest) {
+            Cart::where('user_id', auth()->user()->getAuthIdentifier())->delete();
+
+            session()->flash('message', 'Order Placed Successfully!');
+
+            $this->dispatchBrowserEvent('message', [
+                'text' => 'Order Placed Successfully!',
+                'type' => 'success',
+                'status' => 200
+            ]);
+            return redirect()->to('thank-you');
+        } else {
+            $this->dispatchBrowserEvent('message', [
+                'text' => 'Something went wrong',
+                'type' => 'error',
+                'status' => 500
+            ]);
+        }
+    }
+
+    public function validationForAll()
+    {
+        $this->validate();
+    }
     public function rules()
     {
         return [
@@ -21,11 +57,7 @@ class CheckoutShow extends Component
             'address' => 'required|string|max:50',
             'country' => 'required',
             'city' => 'required',
-            'pincode' => 'required|string|max:10',
-            'cardName' => 'required|string|max:150',
-            'cardNum' => 'required|string|max:19',
-            'cardExp' => 'required|string|max:5',
-            'cardCVV' => 'required|string|max:3',
+            'pincode' => 'required|max:10',
         ];
     }
 
@@ -61,30 +93,6 @@ class CheckoutShow extends Component
         return $order;
     }
 
-    public function cardOrder()
-    {
-        $cardOrder = $this->placeOrder();
-
-        if ($cardOrder) {
-
-            Cart::where('user_id', auth()->user()->getAuthIdentifier())->delete();
-
-            session()->flash('message', 'Order Placed Successfully!');
-
-            $this->dispatchBrowserEvent('message', [
-                'text' => 'Order Placed Successfully!',
-                'type' => 'success',
-                'status' => 200
-            ]);
-            return redirect()->to('thank-you');
-        } else {
-            $this->dispatchBrowserEvent('message', [
-                'text' => 'Something went wrong',
-                'type' => 'error',
-                'status' => 500
-            ]);
-        }
-    }
     public function render()
     {
         $cart = Cart::where('user_id', auth()->user()->getAuthIdentifier())->get();
