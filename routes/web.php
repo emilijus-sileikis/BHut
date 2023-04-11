@@ -84,4 +84,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/product-image/{product_image_id}/delete', 'deleteImage');
     });
 
+    //Order Routes
+    Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function () {
+        Route::get('/orders', 'index');
+        Route::get('/orders/{orderId}', 'view');
+    });
+
 });
