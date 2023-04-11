@@ -45,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
     //Checkout Routes
     Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
 
+    //Order Routes
+    Route::get('orders', [App\Http\Controllers\Frontend\OrderController::class, 'index']);
+    Route::get('orders/{orderId}', [App\Http\Controllers\Frontend\OrderController::class, 'view']);
+
 });
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
