@@ -12,7 +12,8 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        return view('frontend.wishlist.index');
+        $list = Wishlist::where('user_id', auth()->user()->getAuthIdentifier())->get();
+        return view('frontend.wishlist.index', compact('list'));
     }
 
     public function addToWishlist(Request $request)
@@ -59,8 +60,10 @@ class WishlistController extends Controller
         }
     }
 
-    public function removeWishlist()
+    public function remove(int $id)
     {
-
+        $item = Wishlist::findOrFail($id);
+        $item->delete();
+        return redirect()->back();
     }
 }

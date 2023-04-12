@@ -40,7 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('cart/update', [App\Http\Controllers\Frontend\CartController::class, 'update'])->name('cart.update');
 
     //Wishlist Routes
+    Route::get('wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'index']);
     Route::post('wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'addToWishlist']);
+    Route::get('wishlist/remove/{id}', [App\Http\Controllers\Frontend\WishlistController::class, 'remove']);
 
     //Checkout Routes
     Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
