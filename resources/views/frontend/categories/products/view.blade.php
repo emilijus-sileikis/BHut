@@ -95,6 +95,10 @@
     </div>
 
     <script>
+        window.onload = function() {
+            updateProductQuantity(<?php echo $product->quantity; ?>);
+        };
+
         const minusButton = document.getElementById('minus');
         minusButton.addEventListener('click', function() {
             let input = document.getElementById('quantityInput');
@@ -175,28 +179,28 @@
                     })
                     .catch(error => console.error('Error fetching cart count:', error));
             }
-
-            function updateProductQuantity(qty) {
-                const qtyEl = document.getElementById('quantityInput');
-                const inStock = document.getElementById('inStock');
-                const outStock = document.getElementById('outOfStock');
-                const cartBtn = document.getElementById('add-to-cart-btn');
-
-                qtyEl.value = '1';
-
-                if (qty > 0) {
-                    qtyEl.max = qty;
-                } else {
-                    qtyEl.max = '1';
-                    inStock.style.display = 'none';
-                    outStock.style.display = 'block';
-
-                    cartBtn.disabled = true;
-                    cartBtn.innerText = 'Out Of Stock';
-                }
-
-            }
         });
+
+        function updateProductQuantity(qty) {
+            const qtyEl = document.getElementById('quantityInput');
+            const inStock = document.getElementById('inStock');
+            const outStock = document.getElementById('outOfStock');
+            const cartBtn = document.getElementById('add-to-cart-btn');
+
+            qtyEl.value = '1';
+
+            if (qty > 0) {
+                qtyEl.max = qty;
+            } else {
+                qtyEl.max = '1';
+                inStock.style.display = 'none';
+                outStock.style.display = 'block';
+
+                cartBtn.disabled = true;
+                cartBtn.innerText = 'Out Of Stock';
+            }
+
+        }
 
         const addToWishlistButton = document.getElementById('add-to-wishlist-btn');
         addToWishlistButton.addEventListener('click', function() {
