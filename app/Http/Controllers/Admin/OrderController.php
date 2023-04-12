@@ -35,4 +35,20 @@ class OrderController extends Controller
             return redirect()->back();
         }
     }
+
+    public function updateOrderStatus($order_id, Request $request)
+    {
+        $order = Order::where('id', $order_id)->first();
+
+        if ($order) {
+
+            $order->update([
+                'status' => $request->order_status
+            ]);
+
+            return redirect('admin/orders/'.$order_id)->with('message', 'Updated');
+        } else {
+            return redirect('admin/orders/'.$order_id)->with('message', 'Error');
+        }
+    }
 }
