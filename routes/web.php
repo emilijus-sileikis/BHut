@@ -51,6 +51,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('orders', [App\Http\Controllers\Frontend\OrderController::class, 'index']);
     Route::get('orders/{orderId}', [App\Http\Controllers\Frontend\OrderController::class, 'view']);
 
+    //Rating Routes
+    Route::get('like/{product}', [App\Http\Controllers\Frontend\LikesController::class, 'like'])->name('like');
+    Route::get('dislike/{product}', [App\Http\Controllers\Frontend\LikesController::class, 'dislike'])->name('dislike');
+    Route::post('comment/{product_id}', [App\Http\Controllers\Frontend\LikesController::class, 'comment'])->name('comment');
+    Route::delete('delete-comment/{comment}', [App\Http\Controllers\Frontend\LikesController::class, 'delete'])->name('delete_comment');
+
 });
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
