@@ -31,6 +31,8 @@ Route::get('/wishlist/count', [App\Http\Controllers\Frontend\WishlistController:
 Route::post('/payment/{payment_id}', [App\Http\Livewire\Frontend\Checkout\CheckoutShow::class, 'paidOnlineOrder']);
 Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankYou']);
 
+Route::get('blog', [App\Http\Controllers\Frontend\BlogController::class, 'index']);
+
 Route::middleware(['auth'])->group(function () {
 
     //Cart Routes
@@ -56,6 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dislike/{product}', [App\Http\Controllers\Frontend\LikesController::class, 'dislike'])->name('dislike');
     Route::post('comment/{product_id}', [App\Http\Controllers\Frontend\LikesController::class, 'comment'])->name('comment');
     Route::delete('delete-comment/{comment}', [App\Http\Controllers\Frontend\LikesController::class, 'delete'])->name('delete_comment');
+
+    //Blog Routes
+    Route::get('blog/create', [App\Http\Controllers\Frontend\BlogController::class, 'create']);
+    Route::post('blog/post', [App\Http\Controllers\Frontend\BlogController::class, 'post']);
+    Route::post('blog/comment/{id}', [App\Http\Controllers\Frontend\BlogController::class, 'comment'])->name('blog.comment');
+    Route::delete('blog/delete-comment/{id}', [App\Http\Controllers\Frontend\BlogController::class, 'delete'])->name('blog.delete_comment');
 
 });
 
@@ -100,3 +108,5 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     });
 
 });
+
+Route::get('blog/{id}', [App\Http\Controllers\Frontend\BlogController::class, 'view']);
