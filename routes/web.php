@@ -64,6 +64,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('blog/post', [App\Http\Controllers\Frontend\BlogController::class, 'post']);
     Route::post('blog/comment/{id}', [App\Http\Controllers\Frontend\BlogController::class, 'comment'])->name('blog.comment');
     Route::delete('blog/delete-comment/{id}', [App\Http\Controllers\Frontend\BlogController::class, 'delete'])->name('blog.delete_comment');
+    Route::get('blogs', [App\Http\Controllers\Frontend\BlogController::class, 'blogs'])->name('blogs');
+    Route::get('blogs/{id}/edit', [App\Http\Controllers\Frontend\BlogController::class, 'edit']);
+    Route::get('blogs/{id}/delete', [App\Http\Controllers\Frontend\BlogController::class, 'deleteBlog']);
+    Route::put('blogs/{id}/update', [App\Http\Controllers\Frontend\BlogController::class, 'update']);
 
 });
 

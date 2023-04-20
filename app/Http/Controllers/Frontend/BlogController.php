@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\Blog;
 use App\Models\BlogComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
 {
@@ -52,7 +54,7 @@ class BlogController extends Controller
 
         $blog->save();
 
-        return redirect()->back()->with('success', 'Recipe created successfully');
+        return redirect()->route('blogs')->with('success', 'Recipe created successfully');
     }
 
     public function view($id)
@@ -69,7 +71,9 @@ class BlogController extends Controller
     public function comment(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'content' => 'required|string|max:255',
+            'title' => 'required|max:50',
+            'content' => 'required|max:5000',
+            'image' => 'nullable|image|max:4000|mimes:jpeg,png,jpg',
         ]);
 
         $user_id = Auth::id();
@@ -86,8 +90,84 @@ class BlogController extends Controller
     public function delete($id)
     {
         $comment = BlogComment::where('id', $id)->first();
-        $comment->delete();
-        return back()->with('success', 'Comment deleted successfully!');
+
+        if (Auth::id() == $comment->user_id) {
+            $comment->delete();
+            return back()->with('success', 'Comment deleted successfully!');
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function blogs()
+    {
+        $blogs = Blog::where('user_id', Auth::user()->getAuthIdentifier())->paginate(16);
+
+        return view('frontend.blog.blogs', compact('blogs'));
+    }
+
+    public function deleteBlog($id)
+    {
+        $blog = Blog::where('id', $id)->first();
+        $path = public_path($blog->image);
+
+        if (Auth::id() == $blog->user_id || Auth::user()->role_as == '1') {
+            $blog->comments()->delete();
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+            $blog->delete();
+            return redirect()->route('blogs')->with('message', 'Blog Deleted Successfully');
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function edit($id)
+    {
+        $blog = Blog::where('id', $id)->first();
+        if (Auth::id() == $blog->user_id || Auth::user()->role_as == '1') {
+            return view('frontend.blog.edit', compact('blog'));
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:50',
+            'content' => 'required|max:5000',
+            'image' => 'nullable|image|max:4000|mimes:jpeg,png,jpg',
+        ]);
+
+        $blog = Blog::where('id', $id)->first();
+
+        if($request->hasFile('image')) {
+
+            $path = public_path($blog->image);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = rand(1000000, 9999999).'.'.$ext;
+            $destinationPath = 'uploads/blog/';
+
+            $file->move($destinationPath,$fileName);
+            $blog->image = $destinationPath.$fileName;
+        }
+
+        Blog::where('id',$blog->id)->update([
+            'title' => $validatedData['title'],
+            'descr' => $validatedData['content'],
+            'image' => $blog->image,
+        ]);
+
+        return redirect()->back();
     }
 
 }

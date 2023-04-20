@@ -18,11 +18,11 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label class="fw-bold">Image (MAX: 4MB):</label>
-                        <input type="file" name="image" class="form-control">
+                        <input type="file" name="image" class="form-control" required>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="myTextarea" class="fw-bold">Description:</label>
-                        <textarea id="myTextarea" name="content"></textarea>
+                        <textarea id="myTextarea" name="content" required></textarea>
                     </div>
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary float-end">Create</button>

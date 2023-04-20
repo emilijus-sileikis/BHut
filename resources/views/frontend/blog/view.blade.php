@@ -5,6 +5,12 @@
 @section('content')
 
     <div class="container">
+        @if(Auth::user()->role_as == '1')
+            <div  class="row mb-4 col-md-1 text-center mx-auto d-block">
+                <a href="{{ url('blogs/'.$blog->id.'/edit') }}" class="btn btn-success mb-2">Edit</a>
+                <a href="{{ url('blogs/'.$blog->id.'/delete') }}" onclick="return confirm('Are you sure you want to delete this post?')" class="btn btn-danger">Delete</a>
+            </div>
+        @endif
         <div class="row">
             <h5 class="text-center">{{ $blog->title }}</h5>
             <h6 class="text-center"> (By: {{ $blog->user->name }}) </h6>
