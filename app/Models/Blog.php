@@ -20,7 +20,7 @@ class Blog extends Model
 
     public function comments()
     {
-        return $this->hasMany(BlogComment::class, 'blog_id', 'id');
+        return $this->hasMany(BlogComment::class, 'blog_id', 'id')->orderBy('created_at', 'desc');
     }
 
     public function user()

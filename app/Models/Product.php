@@ -44,6 +44,6 @@ class Product extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'product_id', 'id');
+        return $this->hasMany(Comment::class, 'product_id', 'id')->orderBy('created_at', 'desc');
     }
 }
