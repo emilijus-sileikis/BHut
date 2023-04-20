@@ -34,7 +34,8 @@ class BlogController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|max:50',
-            'content' => 'required'
+            'content' => 'required|max:5000',
+            'image' => 'nullable|image|max:4000|mimes:jpeg,png,jpg',
         ]);
 
         $blog = new Blog;
@@ -71,9 +72,7 @@ class BlogController extends Controller
     public function comment(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'title' => 'required|max:50',
-            'content' => 'required|max:5000',
-            'image' => 'nullable|image|max:4000|mimes:jpeg,png,jpg',
+            'content' => 'required|string|max:255',
         ]);
 
         $user_id = Auth::id();

@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="myTextarea" class="fw-bold">Description:</label>
-                        <textarea id="myTextarea" name="content" required></textarea>
+                        <textarea id="myTextarea" name="content"></textarea>
                     </div>
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary float-end">Create</button>
