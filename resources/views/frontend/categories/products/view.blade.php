@@ -49,6 +49,23 @@
                         </div>
                         <div class="mt-2">
                             <div class="input-group">
+                                <span class="btn btn1">
+                                    <a href="{{ url('like/'.$product->id) }}" style="text-decoration: none; color: black;" class="like-btn {{ $product->likes()->where('user_id', Auth::id())->where('like', 1)->exists() ? 'text-success' : '' }}">
+                                        <i class="fa fa-thumbs-up"></i>
+                                        <span class="like-count">{{ $product->likes()->where('like', 1)->count() }}</span>
+                                    </a>
+                                </span>
+
+                                <span class="btn btn1">
+                                    <a href="{{ url('dislike/'.$product->id) }}" style="text-decoration: none; color: black;" class="dislike-btn {{ $product->likes()->where('user_id', Auth::id())->where('dislike', 1)->exists() ? 'text-danger' : '' }}">
+                                        <i class="fa fa-thumbs-down"></i>
+                                        <span class="dislike-count">{{ $product->likes()->where('dislike', 1)->count() }}</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <div class="input-group">
                                 <span id="minus" class="btn btn1"><i class="fa fa-minus"></i></span>
                                 <input id="quantityInput" type="number" value="1" class="input-quantity" min="1" max="{{ $product->quantity }}" />
                                 <span id="plus" class="btn btn1"><i class="fa fa-plus"></i></span>
@@ -88,6 +105,40 @@
                                 {!! $product->description !!}
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                            <div class="card-header">
+                                <h4>Comments</h4>
+                            </div>
+                            <form action="{{ route('comment', $product->id) }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <textarea name="content" class="form-control" placeholder="Leave a comment" maxlength="255" required></textarea>
+                                </div>
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                            <hr>
+                        @foreach($product->comments as $comment)
+                            <div class="mb-2" style="margin-left: 5px;">
+                                @if(Auth::id() == $comment->user_id)
+                                    <form method="POST" action="{{ route('delete_comment', $comment->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm float-end" style="margin-right: 5px;"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                @endif
+                                <strong>{{ $comment->user->name }}</strong>
+                                <p>{{ $comment->content }}</p>
+                                <small class="text-muted">{{ $comment->created_at->format('F j, Y g:i a') }}</small>
+                            </div>
+                            <div style="border: solid lightgray 1px; margin-bottom: 10px;"></div>
+                        @endforeach
                     </div>
                 </div>
             </div>

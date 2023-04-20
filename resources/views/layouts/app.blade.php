@@ -19,6 +19,11 @@
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/jquery.tinymce.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/md7turiptf2ww4sbqydc6lml4dfa3a93ymrawmyi1aidjg7e/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
     @livewireStyles
 </head>
 <body>
