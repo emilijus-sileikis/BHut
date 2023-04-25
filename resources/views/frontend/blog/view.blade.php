@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="container">
-        @if(Auth::user()->role_as == '1')
+        @if(Auth::user() && Auth::user()->role_as == '1')
             <div  class="row mb-4 col-md-1 text-center mx-auto d-block">
                 <a href="{{ url('blogs/'.$blog->id.'/edit') }}" class="btn btn-success mb-2">Edit</a>
                 <a href="{{ url('blogs/'.$blog->id.'/delete') }}" onclick="return confirm('Are you sure you want to delete this post?')" class="btn btn-danger">Delete</a>
