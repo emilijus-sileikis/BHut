@@ -1,2 +1,2 @@
 # BHut
-Script branch
+Documentation branch
