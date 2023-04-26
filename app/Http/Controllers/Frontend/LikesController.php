@@ -17,6 +17,7 @@ class LikesController extends Controller
 
         // Check if the user has already liked the product
         $existingLike = $product->likes()->where('user_id', $user_id)->where('like', 1)->first();
+        $existingDislike = $product->likes()->where('user_id', $user_id)->where('dislike', 1)->first();
 
         if (!$existingLike) {
             // User has not liked the product before
@@ -28,6 +29,12 @@ class LikesController extends Controller
             ]);
 
             $product->increment('thumbs_up');
+
+            // Remove the dislike if it exists
+            if ($existingDislike) {
+                $existingDislike->delete();
+                $product->decrement('thumbs_down');
+            }
         } else {
             // User has already liked the product, remove the like
             $existingLike->delete();
@@ -44,6 +51,7 @@ class LikesController extends Controller
 
         // Check if the user has already disliked the product
         $existingDislike = $product->likes()->where('user_id', $user_id)->where('dislike', 1)->first();
+        $existingLike = $product->likes()->where('user_id', $user_id)->where('like', 1)->first();
 
         if (!$existingDislike) {
             // User has not disliked the product before
@@ -55,6 +63,12 @@ class LikesController extends Controller
             ]);
 
             $product->increment('thumbs_down');
+
+            // Remove the like if it exists
+            if ($existingLike) {
+                $existingLike->delete();
+                $product->decrement('thumbs_up');
+            }
         } else {
             // User has already disliked the product, remove the dislike
             $existingDislike->delete();
